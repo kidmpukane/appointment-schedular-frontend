@@ -1,0 +1,15 @@
+[x]: GET TOKEN FROM COOKIES
+[]: SET UP RESET PASSWORD VIEW: api/v1/dj-rest-auth/ password/reset/
+[]: SET UP RESET PASSWORD CONFIRM VIEW: api/v1/dj-rest-auth/ password/reset/confirm/
+[x]: SET UP LOGIN VIEW: api/v1/dj-rest-auth / login /
+[]: SET UP LOGOUT VIEW: api/v1/dj-rest-auth/ logout/ 
+[]: SET UP GET USER VIEW: api/v1/dj-rest-auth / user/
+[]: SET UP CHANGE PASSWORD VIEW: api/v1/dj-rest-auth/ password/change/ [name='rest_password_change']
+[]: SET UP USER REGISTRATION: api/v1/dj-rest-auth/registration/
+[]: ADD SOCIAL LOGIN
+[]: ADD SOCIAL REGISTRATION
+[x]: Fix Sign Up Screen
+[]: KEEP USER LOGGED IN
+[]: CREATE A USER PROFILE UPON REGISTRATION
+[]: CREATE LOGIC THAT CHECK THE VALIDITY OF YOUR TOKENS AND SESSIONS.
+

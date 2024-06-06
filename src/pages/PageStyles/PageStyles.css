@@ -1,0 +1,465 @@
+:root {
+  --white: #ffffff;
+  --faded-black: #181818;
+  --serious-green: #85a68c;
+  --serious-orange: #ffc273;
+  --dark-serious-orange: #cc9756;
+  --serious-brown: #bf9e80;
+  --serious-red: #ea7a7a;
+  --light-gray: #d6d6d6;
+  --medium-gray: #a9a9a9;
+  --dark-gray: #5a5a5a;
+  --black: #000000;
+  --dark-background: #333333;
+  --sidebar-background: #282828;
+  --accent-color: #d1b89d;
+}
+
+/* General Styles */
+body {
+  background-color: var(--dark-background);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+}
+
+.calendar-container-home {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.calendar-view-home {
+  background-color: var(--sidebar-background);
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.calendar-header-container {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.month-title {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--accent-color);
+}
+
+.navigation-buttons button {
+  background-color: var(--black);
+  border: none;
+  padding: 2rem 2rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.prev-month-button {
+  background-color: var(--black);
+  border: none;
+  padding: 1.5rem 1.5rem;
+  border-radius: 50%; /* Ensures the button is perfectly round */
+  cursor: pointer;
+  color: var(--white);
+  display: flex; /* Aligns items in the center */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  min-width: 2%; /* Adjust based on your needs */
+  min-height: 2%; /* Adjust based on your needs */
+}
+
+.next-month-button {
+  background-color: var(--black);
+  border: none;
+  padding: 1.5rem 1.5rem;
+  border-radius: 50%; /* Ensures the button is perfectly round */
+  cursor: pointer;
+  color: var(--white);
+  display: flex; /* Aligns items in the center */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  min-width: 2%; /* Adjust based on your needs */
+  min-height: 2%; /* Adjust based on your needs */
+}
+.next-month-button:hover {
+  background-color: var(--faded-black);
+}
+
+.prev-month-button:hover {
+  background-color: var(--faded-black);
+}
+
+.weekday-labels-home-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  color: var(--medium-gray);
+  margin-bottom: 1rem;
+  gap: 0.5em;
+}
+
+.weekday-label-home {
+  padding: 0.5rem 0;
+  font-weight: 200;
+  font-size: 1.2em;
+  color: var(--accent-color);
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.1em;
+}
+
+.day-container {
+}
+
+.day-button {
+  border: none;
+  justify-content: center;
+  align-items: center;
+  width: 5em;
+  height: 5em;
+  background-color: var(--faded-black);
+  cursor: pointer;
+  border-radius: 0.5em;
+  color: var(--accent-color);
+  position: relative;
+  font-weight: 400;
+  font-size: 0.5em;
+}
+
+.day-button:hover {
+  background-color: var(--light-gray);
+  color: var(--faded-black);
+  font-weight: 700;
+}
+
+.selected-month {
+  border-radius: 0.5rem;
+  background-color: var(--faded-black);
+  color: var(--light-gray);
+  font-size: 0.4rem;
+}
+
+.selected-day {
+  background-color: var(--light-gray);
+  color: var(--faded-black);
+  border: none;
+  justify-content: center;
+  align-items: center;
+  width: 5em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  position: relative;
+  font-weight: 400;
+  font-size: 0.5em;
+}
+
+.today {
+  background-color: var(--dark-serious-orange);
+  color: var(--white);
+  border: none;
+  justify-content: center;
+  align-items: center;
+  width: 5em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  position: relative;
+  font-weight: 400;
+  font-size: 0.5em;
+}
+
+.meeting-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--serious-red);
+  border-radius: 50%;
+  position: absolute;
+
+  top: 0.2rem;
+  right: 0.1rem;
+}
+
+.schedule-view {
+  background-color: var(--sidebar-background);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.schedule-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  margin-bottom: 4rem;
+}
+
+.meeting-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.meeting-item {
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.meeting-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.meeting-name {
+  font-weight: bold;
+}
+
+.meeting-time {
+  color: var(--medium-gray);
+  font-size: 0.8rem;
+}
+
+.meeting-service {
+  font-weight: 200;
+}
+
+.meeting-buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.delete-meeting-button {
+  background-color: var(--black);
+  color: var(--accent-color);
+  border: 2px solid var(--black); /* Corrected border declaration */
+  padding: 0.8rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.6rem;
+  width: 80%;
+  height: 10%; /* Adjust as needed */
+  display: flex; /* Enables flexbox */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+}
+
+.reschedule-meeting-button {
+  background-color: var(--dark-background);
+  color: var(--accent-color); /* Assuming this is the desired text color */
+  border: 2px solid var(--dark-gray); /* Corrected border declaration */
+  padding: 0.8rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.6rem;
+  width: 80%;
+  height: 10%; /* Adjust as needed */
+  display: flex; /* Enables flexbox */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+}
+
+.user-info-container {
+  font-family: "Inter", sans-serif;
+  padding: 2rem;
+  background-color: var(--sidebar-background);
+  border-radius: 1rem;
+  overflow-y: auto;
+}
+
+.general-info-container {
+}
+
+.user-info-heading {
+  padding-bottom: 1rem;
+}
+
+.user-info-username {
+  margin-top: -1rem;
+  font-size: 1.5rem;
+  font-weight: 200;
+  padding-bottom: 2rem;
+}
+
+.user-info-h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding-top: 0.3rem;
+  padding-bottom: 0.4rem;
+}
+
+.user-info-span {
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+
+.user-info-org-button {
+  background-color: var(--accent-color);
+  color: var(--faded-black);
+  font-weight: 500;
+  border: 2px solid var(--dark-gray); /* Corrected border declaration */
+  padding: 0.6rem;
+  border-radius: 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin: 0.2rem 2px;
+  width: 100%;
+}
+.user-info-org-button:hover {
+  background-color: var(--serious-brown);
+  color: var(--faded-black);
+}
+
+.user-info-settings-button {
+  background-color: var(--dark-background);
+  color: var(--light-gray); /* Assuming this is the desired text color */
+  border: 2px solid var(--dark-gray); /* Corrected border declaration */
+  padding: 0.6rem;
+  border-radius: 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin-top: 0.1rem;
+  margin: 0.2rem 2px;
+  width: 100%;
+}
+
+.user-schedule-settings-button {
+  background-color: var(--black);
+  color: var(--light-gray); /* Assuming this is the desired text color */
+  border: 2px solid var(--dark-gray); /* Corrected border declaration */
+  padding: 0.6rem;
+  border-radius: 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin-top: 0.1rem;
+  margin: 0.2rem 2px;
+  width: 100%;
+}
+
+/* New Class for outside month days */
+.outside-month {
+  background-color: var(--sidebar-background);
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--dark-gray);
+  font-weight: 500;
+}
+
+.availability-registration-container form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Split into three equal columns */
+  gap: 1rem; /* Reduce the gap between columns */
+}
+
+.availability-registration-container form div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Adjust the width of full-width elements */
+.availability-registration-container form div:nth-child(3),
+.availability-registration-container form div:nth-child(4),
+.availability-registration-container form div:nth-child(5),
+.availability-registration-container form div:nth-child(6) {
+  grid-column: 1 / -1; /* Span all columns */
+}
+
+/* Center the submit button */
+.availability-registration-container form div:last-child {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+
+.availability-registration-container {
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--sidebar-background);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.availability-registration-container h2 {
+  text-align: center;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.availability-registration-container form {
+  display: grid;
+  gap: 1rem;
+}
+
+.availability-registration-container form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.availability-registration-container form label {
+  color: var(--light-gray);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.availability-registration-container form input,
+.availability-registration-container form select {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--dark-gray);
+  background-color: var(--faded-black);
+  color: var(--accent-color);
+}
+
+.availability-registration-container form input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.availability-registration-container form button {
+  background-color: var(--accent-color);
+  color: var(--faded-black);
+  font-weight: 700;
+  border: 2px solid var(--dark-gray); /* Corrected border declaration */
+  padding: 0.6rem;
+  border-radius: 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0.2rem 2px;
+  width: 100%;
+}
+
+.availability-registration-container form button:hover {
+  background-color: var(--serious-orange);
+}
+
+@media (max-width: 1200px) {
+  .calendar-container-home {
+    flex-direction: column;
+    align-items: center;
+  }
+  .availability-registration-container form {
+    display: flex;
+    gap: 1rem;
+  }
+}

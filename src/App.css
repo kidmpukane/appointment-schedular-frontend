@@ -1,0 +1,99 @@
+/* Global Styles */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}
+
+body,
+html {
+  font-family: "Inter", sans-serif;
+  padding: 1rem;
+  background-color: var(--dark-background); /* Dark background color */
+  color: #d1b89d; /* Light beige text color */
+}
+
+:root {
+  --white: #ffffff;
+  --faded-black: #181818;
+  --serious-green: #85a68c;
+  --serious-orange: #ffc273;
+  --serious-brown: #bf9e80;
+  --serious-red: #ea7a7a;
+  --light-gray: #f4f4f4;
+  --medium-gray: #d6d6d6;
+  --dark-gray: #a9a9a9;
+  --black: #000000;
+  --dark-background: #212121; /* Dark background for main content */
+  --sidebar-background: #282828; /* Slightly lighter than main background */
+  --accent-color: #d1b89d; /* Accent color for text and borders */
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  min-height: 100%;
+  max-width: 100%;
+  gap: 1rem;
+}
+
+.sidebar {
+  color: var(--accent-color);
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--accent-color);
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #1a1a1a;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1200px) {
+  .app-grid {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 0.5rem;
+  }
+}
