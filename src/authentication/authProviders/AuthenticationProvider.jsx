@@ -4,8 +4,8 @@ export const AuthenticationContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
   const [authInfo, setAuthInfo] = useState({
-    csrfToken: true,
-    sessionId: true,
+    csrfToken: null,
+    sessionId: null,
     userId: null,
     profileId: null,
   });
