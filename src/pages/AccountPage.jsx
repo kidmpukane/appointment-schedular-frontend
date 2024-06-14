@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetInfo, useUserProfile } from "../hooks/useQueryHooks";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
@@ -26,7 +26,8 @@ const AccountPage = () => {
     authInfo.csrfToken,
     authInfo.sessionId
   );
-  console.log(userData);
+  authInfo.profileId = userData?.id;
+
   // if (isLoading) {
   //   return <div>Loading...</div>;
   // }
@@ -35,11 +36,11 @@ const AccountPage = () => {
   //   return <div>Error fetching user profile data</div>;
   // }
 
-  // const handleNavigateToAvailabilityForm = () => {
-  //   navigate("/availability-form", {
-  //     state: { userProfileId: userProfile?.id },
-  //   });
-  // };
+  const handleNavigateToAvailabilityForm = () => {
+    navigate("/availability-form", {
+      state: { userProfileId: userData?.id },
+    });
+  };
 
   return (
     <div className="user-info-container">
