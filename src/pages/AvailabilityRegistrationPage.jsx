@@ -2,12 +2,13 @@ import { useState, useContext } from "react";
 import "./PageStyles/PageStyles.css";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
 import { useLocation } from "react-router-dom";
-import { useAvailabilitySubmit } from "../hooks/useQueryHooks";
+import { useAvailabilityPut } from "../hooks/useQueryHooks";
 
 function AvailabilityRegistrationPage() {
   const { authInfo } = useContext(AuthenticationContext);
   const location = useLocation();
   const userProfileId = location.state?.userProfileId || null;
+
   const [formData, setFormData] = useState({
     provider: {
       userProfileId: userProfileId,
@@ -30,12 +31,14 @@ function AvailabilityRegistrationPage() {
     }));
   };
 
+  let availabilityUrlPut = `127.0.0.1:8000/availability/edit-availability/${userProfileId}/`;
+
   const {
     mutate: submitAvailability,
     isLoading,
     isError,
     error,
-  } = useAvailabilitySubmit(authInfo);
+  } = useAvailabilityPut(authInfo, availabilityUrlPut);
 
   const handleDateChange = (e) => {
     const { name, value } = e.target;

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetInfo, useUserProfile } from "../hooks/useQueryHooks";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
@@ -12,10 +12,6 @@ import "./PageStyles/PageStyles.css";
 //   };
 // };
 
-// const { data } = useGetInfo(
-//   `http://127.0.0.1:8000/availability/availability/user/${userProfile?.id}/`
-// );
-
 // console.log(data ? data : "No data...");
 
 const AccountPage = () => {
@@ -28,13 +24,9 @@ const AccountPage = () => {
   );
   authInfo.profileId = userData?.id;
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (isError) {
-  //   return <div>Error fetching user profile data</div>;
-  // }
+  const { data: availabilityData } = useGetInfo(
+    `http://127.0.0.1:8000/availability/availability/user/${authInfo?.profileId}/`
+  );
 
   const handleNavigateToAvailabilityForm = () => {
     navigate("/availability-form", {
@@ -52,24 +44,34 @@ const AccountPage = () => {
         <div className="general-info-container">
           <div className="weekend-status-container">
             <h3 className="user-info-h3">Weekend Status:</h3>
-            {/* <span className="user-info-span">
-              {myData.exclude_weekends
-                ? "Your organisation does not work weekends"
-                : "Your organisation works weekends"}
-            </span> */}
+            <span className="user-info-span">
+              {availabilityData
+                ? availabilityData.exclude_weekends
+                  ? "Your organisation does not work weekends"
+                  : "Your organisation works weekends"
+                : "Edit Organisation"}
+            </span>
           </div>
           <h3 className="user-info-h3">Services Offered:</h3>
-          {/* <span className="user-info-span">{myData?.service_offered}</span> */}
+          <span className="user-info-span">
+            {availabilityData ? availabilityData.service_offered : "..."}
+          </span>
           <h3 className="user-info-h3">Working Hours:</h3>
-          {/* <span className="user-info-span">{`${myData?.start_hour} - ${myData?.end_hour}`}</span> */}
+          <span className="user-info-span">
+            {availabilityData
+              ? `${availabilityData?.start_hour} - ${availabilityData?.end_hour}`
+              : "edit info"}
+          </span>
           <h3 className="user-info-h3">Location:</h3>
-          {/* <span className="user-info-span">{myData?.location}</span> */}
+          <span className="user-info-span">
+            {availabilityData ? availabilityData.location : "Edit Location"}
+          </span>
         </div>
       </div>
       <div className="user-button-container">
         <button
           className="user-info-org-button"
-          // onClick={handleNavigateToAvailabilityForm}
+          onClick={handleNavigateToAvailabilityForm}
         >
           Edit Organisation
         </button>

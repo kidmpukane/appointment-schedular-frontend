@@ -55,10 +55,10 @@ const useUserProfile = (userId, csrfToken, sessionId) => {
   });
 };
 
-const useAvailabilitySubmit = (authInfo) => {
+const useAvailabilityPost = (authInfo, availabilityUrlPost) => {
   const submitAvailability = async (formData) => {
     const response = await axios.post(
-      "http://127.0.0.1:8000/availability/register-availability/",
+      availabilityUrlPost,
       {
         ...formData,
         provider: formData.provider.userProfileId,
@@ -78,4 +78,27 @@ const useAvailabilitySubmit = (authInfo) => {
   return useMutation(submitAvailability);
 };
 
-export { useGetInfo, useUserProfile, useAvailabilitySubmit };
+const useAvailabilityPut = (authInfo, availabilityUrlPut) => {
+  const submitAvailability = async (formData) => {
+    const response = await axios.post(
+      availabilityUrlPut,
+      {
+        ...formData,
+        provider: formData.provider.userProfileId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": authInfo.csrfToken,
+          sessionid: authInfo.sessionId,
+        },
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  };
+
+  return useMutation(submitAvailability);
+};
+
+export { useGetInfo, useUserProfile, useAvailabilityPut, useAvailabilityPost };
