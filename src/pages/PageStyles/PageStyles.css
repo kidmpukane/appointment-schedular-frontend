@@ -16,22 +16,23 @@
 }
 
 /* General Styles */
-body {
-  background-color: var(--dark-background);
-  color: var(--white);
-  font-family: "Inter", sans-serif;
-}
 
 .calendar-container-home {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
   gap: 1rem;
+  background-color: var(--faded-black);
 }
 
 .calendar-view-home {
-  background-color: var(--sidebar-background);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  max-height: 100vh;
+  background-color: var(--light-gray);
+  border-radius: 2em;
+  padding: 5%;
+  grid-row-start: 1;
+  grid-row-end: 5;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .month-header {
@@ -100,6 +101,12 @@ body {
   background-color: var(--faded-black);
 }
 
+.calendar-mnd-container {
+  padding: 0.1vw;
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .weekday-labels-home-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -130,42 +137,33 @@ body {
   border: none;
   justify-content: center;
   align-items: center;
-  width: 5em;
-  height: 5em;
-  background-color: var(--faded-black);
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  width: 100%;
+  height: 100%;
+  background-color: var(--light-gray);
   cursor: pointer;
-  border-radius: 0.5em;
-  color: var(--accent-color);
+  border-radius: 0.8em;
+  color: var(--faded-black);
   position: relative;
   font-weight: 400;
-  font-size: 0.5em;
+  font-size: 1em;
 }
 
 .day-button:hover {
-  background-color: var(--light-gray);
+  background-color: var(--medium-gray);
   color: var(--faded-black);
   font-weight: 700;
 }
 
 .selected-month {
-  border-radius: 0.5rem;
-  background-color: var(--faded-black);
+  background-color: var(--white);
   color: var(--light-gray);
-  font-size: 0.4rem;
 }
 
 .selected-day {
-  background-color: var(--light-gray);
+  background-color: var(--serious-brown);
   color: var(--faded-black);
-  border: none;
-  justify-content: center;
-  align-items: center;
-  width: 5em;
-  cursor: pointer;
-  border-radius: 0.5em;
-  position: relative;
-  font-weight: 400;
-  font-size: 0.5em;
 }
 
 .today {
@@ -197,7 +195,11 @@ body {
   background-color: var(--sidebar-background);
   border-radius: 0.5rem;
   padding: 1.5rem;
-  min-width: 50%;
+
+  grid-row-start: 1;
+  grid-row-end: 5;
+  grid-column-start: 2;
+  grid-column-end: 5;
 }
 
 .schedule-title {
@@ -456,8 +458,7 @@ body {
 
 @media (max-width: 1200px) {
   .calendar-container-home {
-    flex-direction: column;
-    align-items: center;
+    display: block;
   }
   .availability-registration-container form {
     display: flex;
@@ -469,5 +470,22 @@ body {
     border-radius: 0.5rem;
     padding: 1.5rem;
     min-width: 100%;
+  }
+
+  .day-button {
+    border: none;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    width: 100%;
+    height: 100%;
+    background-color: var(--faded-black);
+    cursor: pointer;
+    border-radius: 0.5em;
+    color: var(--accent-color);
+    position: relative;
+    font-weight: 400;
+    font-size: 0.8em;
   }
 }

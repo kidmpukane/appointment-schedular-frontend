@@ -22,8 +22,8 @@ body,
 html {
   font-family: "Inter", sans-serif;
   padding: 1rem;
-  background-color: var(--dark-background); /* Dark background color */
-  color: #d1b89d; /* Light beige text color */
+  background-color: var(--faded-black); /* Dark background color */
+  color: var(--white); /* Light beige text color */
 }
 
 :root {
@@ -42,24 +42,8 @@ html {
   --accent-color: #d1b89d; /* Accent color for text and borders */
 }
 
-.app-grid {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  min-height: 100%;
-  max-width: 100%;
-  gap: 1rem;
-}
-
-.sidebar {
-  color: var(--accent-color);
-}
-
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: var(--accent-color);
+.app {
+  background-color: var(--faded-black);
 }
 
 .loading-screen {
@@ -92,8 +76,6 @@ html {
 
 @media (max-width: 1200px) {
   .app-grid {
-    display: grid;
-    grid-template-columns: auto;
-    gap: 0.5rem;
+    justify-content: center;
   }
 }

@@ -143,43 +143,45 @@ const HomePage = () => {
             {">"}
           </button>
         </div>
-        <div className="weekday-labels-home-container">
-          {dayNames.map((dayName) => (
-            <div key={dayName} className="weekday-label-home">
-              {dayName}
-            </div>
-          ))}
-        </div>
-        <div className="days-grid">
-          {days.map((date, index) => {
-            const isCurrentMonth = date.monthOffset === 0;
-            const dayDate = new Date(
-              currentYear,
-              currentMonth + date.monthOffset,
-              date.day
-            );
-            const isSelected = isSameDay(dayDate, selectedDay);
-            const isToday = isSameDay(dayDate, new Date());
-            const hasMeetingDot = hasMeeting(dayDate);
-            const dayButtonClass = `
+        <div className="calendar-mnd-container">
+          <div className="weekday-labels-home-container">
+            {dayNames.map((dayName) => (
+              <div key={dayName} className="weekday-label-home">
+                {dayName}
+              </div>
+            ))}
+          </div>
+          <div className="days-grid">
+            {days.map((date, index) => {
+              const isCurrentMonth = date.monthOffset === 0;
+              const dayDate = new Date(
+                currentYear,
+                currentMonth + date.monthOffset,
+                date.day
+              );
+              const isSelected = isSameDay(dayDate, selectedDay);
+              const isToday = isSameDay(dayDate, new Date());
+              const hasMeetingDot = hasMeeting(dayDate);
+              const dayButtonClass = `
               day-button
               ${isSelected ? "selected-day" : ""}
               ${isToday ? "today" : ""}
               ${isCurrentMonth ? "" : "outside-month"}
             `;
 
-            return (
-              <div key={index} className="day-container">
-                <button
-                  className={dayButtonClass}
-                  onClick={() => setSelectedDay(dayDate)}
-                >
-                  {date.day}
-                  {hasMeetingDot && <div className="meeting-dot"></div>}
-                </button>
-              </div>
-            );
-          })}
+              return (
+                <div key={index} className="day-container">
+                  <button
+                    className={dayButtonClass}
+                    onClick={() => setSelectedDay(dayDate)}
+                  >
+                    {date.day}
+                    {hasMeetingDot && <div className="meeting-dot"></div>}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="schedule-view">

@@ -6,13 +6,8 @@ import "../../App.css";
 
 const ApplicationStack = () => {
   return (
-    <div className="app-grid">
-      <div className="sidebar">
-        <AccountPage />
-      </div>
-      <div className="main">
-        <AppRoutes />
-      </div>
+    <div className="app">
+      <AppRoutes />
     </div>
   );
 };

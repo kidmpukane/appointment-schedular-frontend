@@ -15,11 +15,6 @@
 }
 
 /* General Styles */
-body {
-  background-color: var(--dark-background);
-  color: var(--white);
-  font-family: "Inter", sans-serif;
-}
 
 .form-container {
   display: flex;
