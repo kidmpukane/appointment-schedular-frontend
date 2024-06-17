@@ -46,6 +46,16 @@ const getDaysInMonth = (year, monthIndex) => {
   return dates;
 };
 
+// Function to format time from HH:mm:ss to hh:mm AM/PM
+const formatTime = (timeString) => {
+  const [hours, minutes] = timeString.split(":").slice(0, 2).map(Number);
+  const period = hours >= 12 ? "PM" : "AM";
+  const displayHours = hours % 12 || 12; // Convert midnight (0) to 12 AM
+  const formattedHours = String(displayHours).padStart(2, "0");
+  const formattedMinutes = String(minutes).padStart(2, "0");
+  return `${formattedHours}:${formattedMinutes} ${period}`;
+};
+
 const HomePage = () => {
   const location = useLocation();
   const userProfileId = location.state?.userProfileId || null;
@@ -165,10 +175,7 @@ const HomePage = () => {
                 <div className="meeting-details">
                   <span className="meeting-name">{meeting.full_name}</span>
                   <span className="meeting-time">
-                    {new Date(meeting.time_slot).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatTime(meeting.time_slot)}
                   </span>
                 </div>
                 <span className="meeting-service">{meeting.service}</span>
