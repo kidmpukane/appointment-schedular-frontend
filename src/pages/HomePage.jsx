@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import "./PageStyles/PageStyles.css";
 
 const monthNames = [
@@ -27,62 +29,46 @@ const getDaysInMonth = (year, monthIndex) => {
 
   // Fill in days from the previous month
   for (let i = firstDayOfMonth - 1; i >= 0; i--) {
-    dates.push({
-      day: daysInPrevMonth - i,
-      monthOffset: -1,
-    });
+    dates.push({ day: daysInPrevMonth - i, monthOffset: -1 });
   }
 
   // Fill in days from the current month
   for (let day = 1; day <= daysInMonth; day++) {
-    dates.push({
-      day,
-      monthOffset: 0,
-    });
+    dates.push({ day, monthOffset: 0 });
   }
 
   // Fill in days from the next month
   const remainingDays = 42 - dates.length;
   for (let i = 1; i <= remainingDays; i++) {
-    dates.push({
-      day: i,
-      monthOffset: 1,
-    });
+    dates.push({ day: i, monthOffset: 1 });
   }
 
   return dates;
 };
 
-const meetings = [
-  // Sample meeting data
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    service: "Consultaion",
-    startDatetime: "2024-05-11T13:00",
-    endDatetime: "2024-05-11T14:30",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    service: "Check-up",
-    startDatetime: "2024-05-20T09:00",
-    endDatetime: "2024-05-20T11:30",
-  },
-  {
-    id: 3,
-    name: "Dries Vincent",
-    service: "Enquiry",
-    startDatetime: "2024-05-20T17:00",
-    endDatetime: "2024-05-20T18:30",
-  },
-];
+const HomePage = () => {
+  const location = useLocation();
+  const userProfileId = location.state?.userProfileId || null;
 
-function HomePage() {
-  const today = new Date();
-  const [selectedDay, setSelectedDay] = useState(today);
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const [data, setData] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    if (userProfileId) {
+      axios
+        .get(
+          `http://127.0.0.1:8000/appointments/get-appointment/${userProfileId}/`
+        )
+        .then((response) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching appointments:", error);
+        });
+    }
+  }, [userProfileId]);
 
   const days = getDaysInMonth(currentYear, currentMonth);
 
@@ -113,9 +99,7 @@ function HomePage() {
   };
 
   const hasMeeting = (date) => {
-    return meetings.some((meeting) =>
-      isSameDay(new Date(meeting.startDatetime), date)
-    );
+    return data.some((meeting) => isSameDay(new Date(meeting.date), date));
   };
 
   return (
@@ -148,7 +132,7 @@ function HomePage() {
               date.day
             );
             const isSelected = isSameDay(dayDate, selectedDay);
-            const isToday = isSameDay(dayDate, today);
+            const isToday = isSameDay(dayDate, new Date());
             const hasMeetingDot = hasMeeting(dayDate);
             const dayButtonClass = `
               day-button
@@ -174,21 +158,14 @@ function HomePage() {
       <div className="schedule-view">
         <h2 className="schedule-title">Appointments</h2>
         <ul className="meeting-list">
-          {meetings
-            .filter((meeting) =>
-              isSameDay(new Date(meeting.startDatetime), selectedDay)
-            )
+          {data
+            .filter((meeting) => isSameDay(new Date(meeting.date), selectedDay))
             .map((meeting) => (
               <li key={meeting.id} className="meeting-item">
                 <div className="meeting-details">
-                  <span className="meeting-name">{meeting.name}</span>
+                  <span className="meeting-name">{meeting.full_name}</span>
                   <span className="meeting-time">
-                    {new Date(meeting.startDatetime).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}{" "}
-                    -{" "}
-                    {new Date(meeting.endDatetime).toLocaleTimeString([], {
+                    {new Date(meeting.time_slot).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
@@ -207,6 +184,6 @@ function HomePage() {
       </div>
     </div>
   );
-}
+};
 
 export default HomePage;

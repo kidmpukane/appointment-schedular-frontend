@@ -42,6 +42,12 @@ const AccountPage = () => {
     });
   };
 
+  const handleNavigateHomeForm = () => {
+    navigate("/", {
+      state: { userProfileId: userData?.id },
+    });
+  };
+
   if (isUserLoading) {
     return <div>Loading user data...</div>;
   }
@@ -107,9 +113,7 @@ const AccountPage = () => {
         </button>
         <button
           className="user-schedule-settings-button"
-          onClick={() => {
-            navigate("/");
-          }}
+          onClick={handleNavigateHomeForm}
         >
           Schedule
         </button>
