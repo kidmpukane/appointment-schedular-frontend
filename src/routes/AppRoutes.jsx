@@ -5,9 +5,8 @@ import HelpPage from "../pages/HelpPage";
 import AccountPage from "../pages/AccountPage";
 import Settings from "../pages/Settings";
 import AnalyticsPage from "../pages/AnalyticsPage";
-import LoginForm from "../authentication/authForms/LoginPage";
-import SignupForm from "../authentication/authForms/SignUpPage";
 import AvailabilityRegistrationPage from "../pages/AvailabilityRegistrationPage";
+import AvailabilityEditPage from "../pages/AvailabilityEditPage";
 
 function AppRoutes() {
   return (
@@ -22,7 +21,11 @@ function AppRoutes() {
         element={<BillingAndSubscription />}
       />
       <Route
-        path="/availability-form"
+        path="/availability-edit-form"
+        element={<AvailabilityEditPage />}
+      />
+      <Route
+        path="/availability-registration-form"
         element={<AvailabilityRegistrationPage />}
       />
       <Route path="*" element={<Navigate to="/" />} />

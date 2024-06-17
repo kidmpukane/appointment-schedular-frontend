@@ -4,12 +4,13 @@ import { AuthenticationContext } from "../authentication/authProviders/Authentic
 import { useLocation } from "react-router-dom";
 import { useAvailabilityPut } from "../hooks/useQueryHooks";
 
-function AvailabilityRegistrationPage() {
+function AvailabilityEditPage() {
   const { authInfo } = useContext(AuthenticationContext);
   const location = useLocation();
   const userProfileId = location.state?.userProfileId || null;
 
   const [formData, setFormData] = useState({
+    id: 1,
     provider: {
       userProfileId: userProfileId,
     },
@@ -31,8 +32,8 @@ function AvailabilityRegistrationPage() {
     }));
   };
 
-  let availabilityUrlPut =
-    "127.0.0.1:8000/availability/availability/register-availability/";
+  console.log(userProfileId);
+  let availabilityUrlPut = `http://127.0.0.1:8000/availability/edit-availability/`;
 
   const {
     mutate: submitAvailability,
@@ -177,4 +178,4 @@ function AvailabilityRegistrationPage() {
   );
 }
 
-export default AvailabilityRegistrationPage;
+export default AvailabilityEditPage;

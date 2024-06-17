@@ -78,24 +78,45 @@ const useAvailabilityPost = (authInfo, availabilityUrlPost) => {
   return useMutation(submitAvailability);
 };
 
+const getCsrfToken = () => {
+  let csrfToken = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, 10) === "csrftoken=") {
+        csrfToken = decodeURIComponent(cookie.substring(10));
+        break;
+      }
+    }
+  }
+  return csrfToken;
+};
+
 const useAvailabilityPut = (authInfo, availabilityUrlPut) => {
   const submitAvailability = async (formData) => {
-    const response = await axios.post(
-      availabilityUrlPut,
-      {
+    try {
+      const dataToSend = {
         ...formData,
         provider: formData.provider.userProfileId,
-      },
-      {
+      };
+
+      const csrfToken = getCsrfToken();
+
+      const response = await axios.put(availabilityUrlPut, dataToSend, {
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken": authInfo.csrfToken,
+          "X-CSRFToken": csrfToken,
           sessionid: authInfo.sessionId,
         },
         withCredentials: true,
-      }
-    );
-    return response.data;
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error response:", error.response);
+      throw error;
+    }
   };
 
   return useMutation(submitAvailability);

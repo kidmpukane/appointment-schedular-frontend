@@ -1,38 +1,42 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetInfo, useUserProfile } from "../hooks/useQueryHooks";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
 import "./PageStyles/PageStyles.css";
 
-// const useUserProfile = (userId, csrfToken, sessionId) => {
-//   return {
-//     data: mockUserProfile,
-//     isLoading: false,
-//     isError: false,
-//   };
-// };
-
-// console.log(data ? data : "No data...");
-
 const AccountPage = () => {
   const navigate = useNavigate();
   const { authInfo } = useContext(AuthenticationContext);
-  const { data: userData } = useUserProfile(
+  const { data: userData, isLoading: isUserLoading } = useUserProfile(
     authInfo.userId,
     authInfo.csrfToken,
     authInfo.sessionId
   );
-  authInfo.profileId = userData?.id;
 
-  const { data: availabilityData } = useGetInfo(
-    `http://127.0.0.1:8000/availability/availability/user/${authInfo?.profileId}/`
-  );
+  const [profileId, setProfileId] = useState(null);
+
+  useEffect(() => {
+    if (userData?.id) {
+      setProfileId(userData.id);
+    }
+  }, [userData]);
+
+  const { data: availabilityData, isLoading: isAvailabilityLoading } =
+    useGetInfo(
+      profileId
+        ? `http://127.0.0.1:8000/availability/availability/user/${profileId}/`
+        : null
+    );
 
   const handleNavigateToAvailabilityForm = () => {
-    navigate("/availability-form", {
+    navigate("/availability-edit-form", {
       state: { userProfileId: userData?.id },
     });
   };
+
+  if (isUserLoading) {
+    return <div>Loading user data...</div>;
+  }
 
   return (
     <div className="user-info-container">
@@ -45,7 +49,9 @@ const AccountPage = () => {
           <div className="weekend-status-container">
             <h3 className="user-info-h3">Weekend Status:</h3>
             <span className="user-info-span">
-              {availabilityData
+              {isAvailabilityLoading
+                ? "Loading availability..."
+                : availabilityData
                 ? availabilityData.exclude_weekends
                   ? "Your organisation does not work weekends"
                   : "Your organisation works weekends"
@@ -54,17 +60,27 @@ const AccountPage = () => {
           </div>
           <h3 className="user-info-h3">Services Offered:</h3>
           <span className="user-info-span">
-            {availabilityData ? availabilityData.service_offered : "..."}
+            {isAvailabilityLoading
+              ? "Loading services..."
+              : availabilityData
+              ? availabilityData.service_offered
+              : "..."}
           </span>
           <h3 className="user-info-h3">Working Hours:</h3>
           <span className="user-info-span">
-            {availabilityData
+            {isAvailabilityLoading
+              ? "Loading hours..."
+              : availabilityData
               ? `${availabilityData?.start_hour} - ${availabilityData?.end_hour}`
               : "edit info"}
           </span>
           <h3 className="user-info-h3">Location:</h3>
           <span className="user-info-span">
-            {availabilityData ? availabilityData.location : "Edit Location"}
+            {isAvailabilityLoading
+              ? "Loading location..."
+              : availabilityData
+              ? availabilityData.location
+              : "Edit Location"}
           </span>
         </div>
       </div>
