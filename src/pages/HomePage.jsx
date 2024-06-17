@@ -56,6 +56,23 @@ const formatTime = (timeString) => {
   return `${formattedHours}:${formattedMinutes} ${period}`;
 };
 
+const handleDeleteAppointment = (appointmentId) => {
+  axios
+    .delete(
+      `http://127.0.0.1:8000/appointments/delete-appointment/${appointmentId}/`
+    )
+    .then((response) => {
+      // Handle successful deletion (e.g., update state or show message)
+      console.log("Appointment deleted successfully:", response.data);
+      // Example: Remove the deleted appointment from state
+      setData(data.filter((appointment) => appointment.id !== appointmentId));
+    })
+    .catch((error) => {
+      console.error("Error deleting appointment:", error);
+      // Handle error (e.g., show error message)
+    });
+};
+
 const HomePage = () => {
   const location = useLocation();
   const userProfileId = location.state?.userProfileId || null;
@@ -180,7 +197,13 @@ const HomePage = () => {
                 </div>
                 <span className="meeting-service">{meeting.service}</span>
                 <div className="meeting-buttons">
-                  <button className="delete-meeting-button">Delete</button>
+                  <button
+                    onClick={() => handleDeleteAppointment(meeting.id)}
+                    className="delete-meeting-button"
+                  >
+                    Delete
+                  </button>
+
                   <button className="reschedule-meeting-button">
                     Reschedule
                   </button>

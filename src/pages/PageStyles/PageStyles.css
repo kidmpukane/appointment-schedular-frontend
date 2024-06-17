@@ -30,7 +30,7 @@ body {
 
 .calendar-view-home {
   background-color: var(--sidebar-background);
-  border-radius: 2rem;
+  border-radius: 0.5rem;
   padding: 1rem;
 }
 
@@ -195,8 +195,9 @@ body {
 
 .schedule-view {
   background-color: var(--sidebar-background);
-  border-radius: 1rem;
-  padding: 2rem;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  min-width: 50%;
 }
 
 .schedule-title {
@@ -461,5 +462,12 @@ body {
   .availability-registration-container form {
     display: flex;
     gap: 1rem;
+  }
+
+  .schedule-view {
+    background-color: var(--sidebar-background);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    min-width: 100%;
   }
 }
