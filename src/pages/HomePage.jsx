@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./PageStyles/PageStyles.css";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const monthNames = [
   "January",
@@ -133,14 +135,15 @@ const HomePage = () => {
     <div className="calendar-container-home">
       <div className="calendar-view-home">
         <div className="month-header">
-          <button className="prev-month-button" onClick={previousMonth}>
-            {"<"}
-          </button>
           <h2 className="month-title">
             {monthNames[currentMonth]} {currentYear}
           </h2>
+          <button className="prev-month-button" onClick={previousMonth}>
+            <ArrowBackIosIcon fontSize="small" />
+          </button>
+
           <button className="next-month-button" onClick={nextMonth}>
-            {">"}
+            <ArrowForwardIosIcon fontSize="small" />
           </button>
         </div>
         <div className="calendar-mnd-container">
@@ -186,6 +189,7 @@ const HomePage = () => {
       </div>
       <div className="schedule-view">
         <h2 className="schedule-title">Appointments</h2>
+
         <ul className="meeting-list">
           {data
             .filter((meeting) => isSameDay(new Date(meeting.date), selectedDay))

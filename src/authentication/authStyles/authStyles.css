@@ -310,9 +310,9 @@ a:hover {
 }
 /*<--------------------------------------Mobile View ----------------------------------------------->*/
 
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
   .calendar-container {
     flex-direction: column;
     align-items: center;
   }
-}
+} */

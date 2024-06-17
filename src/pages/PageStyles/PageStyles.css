@@ -27,7 +27,7 @@
 .calendar-view-home {
   max-height: 100vh;
   background-color: var(--light-gray);
-  border-radius: 2em;
+  border-radius: 2rem;
   padding: 5%;
   grid-row-start: 1;
   grid-row-end: 5;
@@ -38,9 +38,8 @@
 .month-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
   font-weight: 300;
+  padding: 2rem;
 }
 
 .calendar-header-container {
@@ -52,46 +51,42 @@
 }
 
 .month-title {
-  font-size: 1rem;
-  font-weight: 300;
-  color: var(--accent-color);
+  font-size: 2em;
+  font-weight: 900;
+  color: var(--black);
 }
 
-.navigation-buttons button {
+/* .navigation-buttons button {
   background-color: var(--black);
   border: none;
-  padding: 2rem 2rem;
+  padding: 0.2rem 0.2rem;
   border-radius: 2rem;
   cursor: pointer;
   color: var(--white);
-}
+} */
 
 .prev-month-button {
   background-color: var(--black);
+  padding: 0.5em;
   border: none;
-  padding: 1.5rem 1.5rem;
   border-radius: 50%; /* Ensures the button is perfectly round */
   cursor: pointer;
   color: var(--white);
   display: flex; /* Aligns items in the center */
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
-  min-width: 2%; /* Adjust based on your needs */
-  min-height: 2%; /* Adjust based on your needs */
 }
 
 .next-month-button {
   background-color: var(--black);
+  padding: 0.5em;
   border: none;
-  padding: 1.5rem 1.5rem;
   border-radius: 50%; /* Ensures the button is perfectly round */
   cursor: pointer;
   color: var(--white);
   display: flex; /* Aligns items in the center */
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
-  min-width: 2%; /* Adjust based on your needs */
-  min-height: 2%; /* Adjust based on your needs */
 }
 .next-month-button:hover {
   background-color: var(--faded-black);
@@ -184,10 +179,8 @@
 }
 
 .schedule-view {
-  background-color: var(--sidebar-background);
   border-radius: 0.5rem;
   padding: 1.5rem;
-
   grid-row-start: 1;
   grid-row-end: 5;
   grid-column-start: 2;
@@ -195,9 +188,9 @@
 }
 
 .schedule-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--accent-color);
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--white);
   margin-bottom: 4rem;
 }
 
