@@ -32,7 +32,6 @@ function AvailabilityEditPage() {
     }));
   };
 
-  console.log(userProfileId);
   let availabilityUrlPut = `http://127.0.0.1:8000/availability/edit-availability/`;
 
   const {

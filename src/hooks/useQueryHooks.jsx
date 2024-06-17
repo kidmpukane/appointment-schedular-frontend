@@ -122,4 +122,38 @@ const useAvailabilityPut = (authInfo, availabilityUrlPut) => {
   return useMutation(submitAvailability);
 };
 
-export { useGetInfo, useUserProfile, useAvailabilityPut, useAvailabilityPost };
+const useProfilePut = (authInfo, profileUrlPut) => {
+  const submitProfile = async (formData) => {
+    try {
+      const dataToSend = {
+        ...formData,
+      };
+      console.log("Form data being sent:", dataToSend);
+      const csrfToken = getCsrfToken();
+
+      const response = await axios.put(profileUrlPut, dataToSend, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+          sessionid: authInfo.sessionId,
+        },
+        withCredentials: true,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error response:", error.response);
+      throw error;
+    }
+  };
+
+  return useMutation(submitProfile);
+};
+
+export {
+  useGetInfo,
+  useUserProfile,
+  useAvailabilityPut,
+  useAvailabilityPost,
+  useProfilePut,
+};

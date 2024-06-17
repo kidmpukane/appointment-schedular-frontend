@@ -28,8 +28,16 @@ const AccountPage = () => {
         : null
     );
 
+  const orgInfo = availabilityData ? availabilityData[0] : null;
+
   const handleNavigateToAvailabilityForm = () => {
     navigate("/availability-edit-form", {
+      state: { userProfileId: userData?.id },
+    });
+  };
+
+  const handleNavigateSettingsForm = () => {
+    navigate("/settings", {
       state: { userProfileId: userData?.id },
     });
   };
@@ -51,8 +59,8 @@ const AccountPage = () => {
             <span className="user-info-span">
               {isAvailabilityLoading
                 ? "Loading availability..."
-                : availabilityData
-                ? availabilityData.exclude_weekends
+                : orgInfo
+                ? orgInfo.exclude_weekends
                   ? "Your organisation does not work weekends"
                   : "Your organisation works weekends"
                 : "Edit Organisation"}
@@ -62,24 +70,24 @@ const AccountPage = () => {
           <span className="user-info-span">
             {isAvailabilityLoading
               ? "Loading services..."
-              : availabilityData
-              ? availabilityData.service_offered
+              : orgInfo
+              ? orgInfo.service_offered
               : "..."}
           </span>
           <h3 className="user-info-h3">Working Hours:</h3>
           <span className="user-info-span">
             {isAvailabilityLoading
               ? "Loading hours..."
-              : availabilityData
-              ? `${availabilityData?.start_hour} - ${availabilityData?.end_hour}`
+              : orgInfo
+              ? `${orgInfo?.start_hour} - ${orgInfo?.end_hour}`
               : "edit info"}
           </span>
           <h3 className="user-info-h3">Location:</h3>
           <span className="user-info-span">
             {isAvailabilityLoading
               ? "Loading location..."
-              : availabilityData
-              ? availabilityData.location
+              : orgInfo
+              ? orgInfo.location
               : "Edit Location"}
           </span>
         </div>
@@ -93,9 +101,7 @@ const AccountPage = () => {
         </button>
         <button
           className="user-info-settings-button"
-          onClick={() => {
-            navigate("/settings");
-          }}
+          onClick={handleNavigateSettingsForm}
         >
           Settings
         </button>
