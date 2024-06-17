@@ -85,7 +85,7 @@ a:hover {
 
 /*<--------------------------------------Calendar----------------------------------------------->*/
 
-.calendar-container {
+/* .calendar-container {
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -180,12 +180,10 @@ a:hover {
 }
 
 .outside-month {
-  color: var(
-    --outside-month-color
-  ); /* Define the color for days outside the current month */
-}
+  color: var(--outside-month-color);
+} */
 
-.appointment-form-wrapper {
+/* .appointment-form-wrapper {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -253,7 +251,7 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 /* Custom Scrollbar Styling */
 .appointment-form-container::-webkit-scrollbar {

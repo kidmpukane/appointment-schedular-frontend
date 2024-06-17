@@ -119,9 +119,9 @@
 
 .weekday-label-home {
   padding: 0.5rem 0;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 1.2em;
-  color: var(--accent-color);
+  color: var(--faded-black);
 }
 
 .days-grid {
@@ -162,22 +162,14 @@
 }
 
 .selected-day {
-  background-color: var(--serious-brown);
-  color: var(--faded-black);
+  background-color: var(--dark-background);
+  color: var(--white);
 }
 
 .today {
-  background-color: var(--dark-serious-orange);
+  background-color: var(--black);
   color: var(--white);
-  border: none;
-  justify-content: center;
-  align-items: center;
-  width: 5em;
-  cursor: pointer;
-  border-radius: 0.5em;
-  position: relative;
-  font-weight: 400;
-  font-size: 0.5em;
+  font-weight: 800;
 }
 
 .meeting-dot {
@@ -361,10 +353,7 @@
 
 /* New Class for outside month days */
 .outside-month {
-  background-color: var(--sidebar-background);
-  border: 2px solid var(--accent-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: var(--dark-gray);
+  color: var(--medium-gray);
   font-weight: 500;
 }
 
