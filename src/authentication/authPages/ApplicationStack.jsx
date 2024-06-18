@@ -1,12 +1,10 @@
-import Sidebar from "../../routes/Sidebar";
-import AccountPage from "../../pages/AccountPage";
-import HomePage from "../../pages/HomePage";
 import AppRoutes from "../../routes/AppRoutes";
 import "../../App.css";
-
+import Header from "../../routes/Header";
 const ApplicationStack = () => {
   return (
     <div className="app">
+      <Header />
       <AppRoutes />
     </div>
   );

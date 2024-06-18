@@ -193,7 +193,9 @@
   color: var(--white);
   margin-bottom: 4rem;
 }
-
+.task-card {
+  background-color: var(--light-gray);
+}
 .meeting-list {
   list-style-type: none;
   padding: 0;

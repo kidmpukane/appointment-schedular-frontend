@@ -82,6 +82,31 @@
   display: flex;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--medium-gray);
+}
+.nav-links a:hover {
+  text-decoration: none;
+  color: var(--white);
+}
+
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;

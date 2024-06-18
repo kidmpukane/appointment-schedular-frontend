@@ -190,33 +190,37 @@ const HomePage = () => {
       <div className="schedule-view">
         <h2 className="schedule-title">Appointments</h2>
 
-        <ul className="meeting-list">
-          {data
-            .filter((meeting) => isSameDay(new Date(meeting.date), selectedDay))
-            .map((meeting) => (
-              <li key={meeting.id} className="meeting-item">
-                <div className="meeting-details">
-                  <span className="meeting-name">{meeting.full_name}</span>
-                  <span className="meeting-time">
-                    {formatTime(meeting.time_slot)}
-                  </span>
-                </div>
-                <span className="meeting-service">{meeting.service}</span>
-                <div className="meeting-buttons">
-                  <button
-                    onClick={() => handleDeleteAppointment(meeting.id)}
-                    className="delete-meeting-button"
-                  >
-                    Delete
-                  </button>
+        <div className="task-card">
+          <ul className="meeting-list">
+            {data
+              .filter((meeting) =>
+                isSameDay(new Date(meeting.date), selectedDay)
+              )
+              .map((meeting) => (
+                <li key={meeting.id} className="meeting-item">
+                  <div className="meeting-details">
+                    <span className="meeting-name">{meeting.full_name}</span>
+                    <span className="meeting-time">
+                      {formatTime(meeting.time_slot)}
+                    </span>
+                  </div>
+                  <span className="meeting-service">{meeting.service}</span>
+                  <div className="meeting-buttons">
+                    <button
+                      onClick={() => handleDeleteAppointment(meeting.id)}
+                      className="delete-meeting-button"
+                    >
+                      Delete
+                    </button>
 
-                  <button className="reschedule-meeting-button">
-                    Reschedule
-                  </button>
-                </div>
-              </li>
-            ))}
-        </ul>
+                    <button className="reschedule-meeting-button">
+                      Reschedule
+                    </button>
+                  </div>
+                </li>
+              ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
