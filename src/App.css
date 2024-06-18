@@ -42,6 +42,61 @@ html {
   --accent-color: #d1b89d; /* Accent color for text and borders */
 }
 
+.main-content {
+  margin: 0;
+  padding: 2.4vw;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--faded-black);
+  color: var(--white);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: var(--z-fixed);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.menu-toggle {
+  display: none;
+  background-color: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--medium-gray);
+}
+
+.nav-links a:hover {
+  text-decoration: none;
+  color: var(--white);
+}
+
 .app {
   background-color: var(--faded-black);
 }

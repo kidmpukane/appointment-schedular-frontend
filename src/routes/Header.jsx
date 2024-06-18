@@ -14,7 +14,7 @@ const Header = () => {
       <button className="menu-toggle" onClick={toggleMenu}>
         &#9776;
       </button>
-      <nav className={isMenuOpen ? "nav-open" : ""}>
+      <nav className={isMenuOpen ? "nav nav-open" : "nav"}>
         <ul className="nav-links">
           <li>
             <a href="/">Home</a>

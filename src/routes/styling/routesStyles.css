@@ -9,6 +9,10 @@
   --medium-gray: #d6d6d6;
   --dark-gray: #a9a9a9;
   --black: #000000;
+  --first-color: #ff6347;
+  --title-color: #000000;
+  --header-height: 4rem;
+  --z-fixed: 1000;
 }
 
 .header {
@@ -18,6 +22,11 @@
   padding: 1rem;
   background-color: var(--faded-black);
   color: var(--white);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: var(--z-fixed);
 }
 
 .header h1 {
@@ -59,7 +68,7 @@
     display: block;
   }
 
-  .nav-links {
+  .nav {
     display: none;
     flex-direction: column;
     width: 100%;
@@ -69,8 +78,13 @@
     left: 0;
   }
 
-  .nav-links.nav-open {
+  .nav.nav-open {
     display: flex;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
   }
 
   .nav-links li {

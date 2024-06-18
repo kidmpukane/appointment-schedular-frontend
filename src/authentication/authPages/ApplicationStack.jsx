@@ -6,7 +6,9 @@ const ApplicationStack = () => {
   return (
     <div className="app">
       <Header />
-      <AppRoutes />
+      <div className="main-content">
+        <AppRoutes />
+      </div>
     </div>
   );
 };
