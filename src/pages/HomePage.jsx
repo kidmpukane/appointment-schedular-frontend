@@ -214,7 +214,9 @@ const HomePage = () => {
                       G
                     </button>
                   </div>
-
+                  <div className="breakpoint">
+                    <hr />
+                  </div>
                   {/* <div className="meeting-notes-container">
                     <span className="meeting-notes">{meeting.notes}</span>
                   </div> */}

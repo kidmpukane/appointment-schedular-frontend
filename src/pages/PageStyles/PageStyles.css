@@ -204,31 +204,35 @@
 
 .task-card {
   background-color: var(--light-gray);
-  padding: 2rem;
+  padding: 1.4rem;
   border-radius: 1.5rem;
 }
-.meeting-list {
+/* .meeting-list {
   list-style-type: none;
   padding: 0;
-}
+} */
 
 .meeting-time-date-container {
   display: grid;
 }
 .meeting-time {
   color: var(--faded-black);
-  font-size: 2rem;
+  font-size: 1.7em;
   font-weight: 800;
 }
 .meeting-date {
   color: var(--faded-black);
-  font-size: 1.7rem;
+  font-size: 1.4em;
   font-weight: 200;
 }
 
 .meeting-service {
   font-weight: 600;
   font-size: 1.2em;
+}
+
+.breakpoint {
+  padding: 2rem;
 }
 
 .meeting-client-container {
