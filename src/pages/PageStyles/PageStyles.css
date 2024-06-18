@@ -193,44 +193,58 @@
   color: var(--white);
   margin-bottom: 4rem;
 }
-.task-card {
-  background-color: var(--light-gray);
-}
-.meeting-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.meeting-item {
-  padding: 0.2rem;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-}
 
 .meeting-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  color: var(--faded-black);
 }
 
-.meeting-name {
-  font-weight: bold;
+.task-card {
+  background-color: var(--light-gray);
+  padding: 2rem;
+  border-radius: 1.5rem;
+}
+.meeting-list {
+  list-style-type: none;
+  padding: 0;
 }
 
+.meeting-time-date-container {
+  display: grid;
+}
 .meeting-time {
-  color: var(--medium-gray);
-  font-size: 0.8rem;
+  color: var(--faded-black);
+  font-size: 2rem;
+  font-weight: 800;
 }
-
-.meeting-service {
+.meeting-date {
+  color: var(--faded-black);
+  font-size: 1.7rem;
   font-weight: 200;
 }
 
-.meeting-buttons {
-  margin-top: 2rem;
+.meeting-service {
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.meeting-client-container {
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+}
+.meeting-client-name {
+  color: var(--faded-black);
+}
+.meeting-client-email {
+  color: var(--faded-black);
+  font-weight: 900;
+}
+.meeting-location {
+  color: var(--faded-black);
+  font-weight: 800;
 }
 
 .delete-meeting-button {
@@ -241,28 +255,21 @@
   border-radius: 2rem;
   font-weight: 600;
   font-size: 0.6rem;
-  width: 80%;
-  height: 10%; /* Adjust as needed */
   display: flex; /* Enables flexbox */
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
 }
 
-.reschedule-meeting-button {
-  background-color: var(--dark-background);
-  color: var(--accent-color); /* Assuming this is the desired text color */
-  border: 2px solid var(--dark-gray); /* Corrected border declaration */
-  padding: 0.8rem;
-  border-radius: 2rem;
-  font-weight: 600;
-  font-size: 0.6rem;
-  width: 80%;
-  height: 10%; /* Adjust as needed */
-  display: flex; /* Enables flexbox */
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
+.meeting-notes-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.meeting-notes {
+  max-width: 60%;
+  color: var(--faded-black);
+}
 .user-info-container {
   font-family: "Inter", sans-serif;
   padding: 2rem;

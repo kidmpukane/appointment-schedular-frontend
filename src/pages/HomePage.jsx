@@ -199,23 +199,33 @@ const HomePage = () => {
               .map((meeting) => (
                 <li key={meeting.id} className="meeting-item">
                   <div className="meeting-details">
-                    <span className="meeting-name">{meeting.full_name}</span>
-                    <span className="meeting-time">
-                      {formatTime(meeting.time_slot)}
-                    </span>
-                  </div>
-                  <span className="meeting-service">{meeting.service}</span>
-                  <div className="meeting-buttons">
+                    <div className="meeting-time-date-container">
+                      <span className="meeting-time">
+                        {formatTime(meeting.time_slot)}
+                      </span>
+                      <span className="meeting-date">{meeting.date}</span>
+                    </div>
+
+                    <span className="meeting-service">{meeting.service}</span>
                     <button
                       onClick={() => handleDeleteAppointment(meeting.id)}
                       className="delete-meeting-button"
                     >
-                      Delete
+                      G
                     </button>
+                  </div>
 
-                    <button className="reschedule-meeting-button">
-                      Reschedule
-                    </button>
+                  {/* <div className="meeting-notes-container">
+                    <span className="meeting-notes">{meeting.notes}</span>
+                  </div> */}
+                  <div className="meeting-client-container">
+                    <span className="meeting-client-name">
+                      {meeting.full_name}
+                    </span>
+                    <span className="meeting-client-email">
+                      {meeting.email}
+                    </span>
+                    <span className="meeting-location">{meeting.location}</span>
                   </div>
                 </li>
               ))}

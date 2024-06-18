@@ -12,6 +12,9 @@ const Header = () => {
           <li>
             <a href="/account">Account</a>
           </li>
+          <li>
+            <a href="/settings">Settings</a>
+          </li>
         </ul>
       </nav>
     </header>

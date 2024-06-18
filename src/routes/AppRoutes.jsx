@@ -28,7 +28,7 @@ function AppRoutes() {
         path="/availability-registration-form"
         element={<AvailabilityRegistrationPage />}
       />
-      <Route path="*" element={<Navigate to="/" />} />
+      {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes>
   );
 }
