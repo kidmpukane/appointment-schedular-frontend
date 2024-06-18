@@ -39,6 +39,7 @@
   display: flex;
   justify-content: space-between;
   font-weight: 300;
+  font-size: 1vw;
   padding: 2rem;
 }
 
@@ -185,8 +186,8 @@
 }
 
 .refresh-button {
-  height: 10%;
-  width: 10%;
+  height: 3vw;
+  width: 3vw;
   justify-content: center;
   align-items: center;
   background-color: var(--serious-green);
@@ -234,7 +235,7 @@
 }
 
 .schedule-title {
-  font-size: 2.5rem;
+  font-size: 2.6em;
   padding: 1rem;
   font-weight: 200;
   color: var(--white);
@@ -511,13 +512,6 @@
     gap: 1rem;
   }
 
-  .schedule-view {
-    background-color: var(--sidebar-background);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    min-width: 100%;
-  }
-
   .day-button {
     border: none;
     justify-content: center;
@@ -526,12 +520,64 @@
     padding-bottom: 2em;
     width: 100%;
     height: 100%;
-    background-color: var(--faded-black);
+    background-color: var(--light-gray);
     cursor: pointer;
-    border-radius: 0.5em;
-    color: var(--accent-color);
+    border-radius: 0.8em;
     position: relative;
+    font-weight: 800;
+    font-size: 0.6em;
+  }
+
+  .month-header {
+    font-size: 2.2vw;
+  }
+
+  .refresh-button {
+    height: 10vw;
+    width: 12vw;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--serious-green);
+    color: var(--faded-black);
+  }
+
+  .meeting-time-date-container {
+    display: grid;
+  }
+  .meeting-time {
+    color: var(--faded-black);
+    font-size: 4vw;
+    font-weight: 800;
+  }
+  .meeting-date {
+    color: var(--faded-black);
+    font-size: 4vw;
     font-weight: 400;
-    font-size: 0.8em;
+  }
+
+  .meeting-service {
+    font-weight: 600;
+    font-size: 4vw;
+  }
+
+  .meeting-client-name {
+    font-size: 2vw;
+    font-weight: 300;
+  }
+  .meeting-client-email {
+    font-size: 2vw;
+  }
+  .meeting-location {
+    font-size: 2vw;
+  }
+
+  .delete-meeting-button {
+    background-color: var(--black);
+    color: var(--light-gray);
+    padding: 0.4rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -1,5 +1,3 @@
-/* styling/routesStyles.css */
-
 :root {
   --white: #ffffff;
   --faded-black: #181818;
@@ -13,85 +11,33 @@
   --black: #000000;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.sidebar-header {
-  color: var(--medium-gray);
-}
-
-.menu-toggle {
-  display: none;
-  background-color: var(--faded-black);
-  color: var(--white);
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar ul li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  font-weight: 200;
-  color: var(--dark-gray);
-  padding: 0.5vw;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar ul li a:hover {
-  color: var(--white);
-}
-
-.sidebar ul li {
-  padding: 0.6vw 1.5vw;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar ul li:hover {
-  background-color: var(--faded-black);
-  border-radius: 0.8vw;
-}
-
-.sidebar ul li a svg {
-  margin-right: 10px;
-}
-
-.sidebar ul li a span {
-  margin-left: 10px;
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-}
-
-.menu.open {
-  display: flex;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  background-color: var(--faded-black);
+  color: var(--white);
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.menu-toggle {
+  display: none;
+  background-color: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 .nav-links {
   list-style-type: none;
   display: flex;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
@@ -102,6 +48,7 @@
   text-decoration: none;
   color: var(--medium-gray);
 }
+
 .nav-links a:hover {
   text-decoration: none;
   color: var(--white);
@@ -112,23 +59,28 @@
     display: block;
   }
 
-  .menu {
+  .nav-links {
     display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--faded-black);
+    position: absolute;
+    top: 100%;
+    left: 0;
   }
 
-  .menu.open {
+  .nav-links.nav-open {
     display: flex;
   }
 
-  .sidebar ul li a span {
-    display: none;
-  }
-
-  .sidebar ul li a svg {
+  .nav-links li {
     margin: 0;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid var(--dark-gray);
   }
 
-  .sidebar-header {
-    display: none;
+  .nav-links li:first-child {
+    border-top: none;
   }
 }
