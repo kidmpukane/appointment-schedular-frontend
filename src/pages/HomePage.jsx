@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./PageStyles/PageStyles.css";
+import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
+import { useGetInfo, useUserProfile } from "../hooks/useQueryHooks";
 
 const monthNames = [
   "January",
@@ -127,6 +132,21 @@ const HomePage = () => {
       });
   };
 
+  const navigate = useNavigate();
+  const { authInfo } = useContext(AuthenticationContext);
+
+  const { data: userData, isLoading: isUserLoading } = useUserProfile(
+    authInfo.userId,
+    authInfo.csrfToken,
+    authInfo.sessionId
+  );
+
+  const handleNavigateHomeForm = () => {
+    navigate("/", {
+      state: { userProfileId: userData?.id },
+    });
+  };
+
   return (
     <div className="calendar-container-home">
       <div className="calendar-view-home">
@@ -183,7 +203,12 @@ const HomePage = () => {
         </div>
       </div>
       <div className="schedule-view">
-        <h2 className="schedule-title">Appointments</h2>
+        <div className="appointment-container">
+          <h2 className="schedule-title">Appointments</h2>
+          <button className="refresh-button" onClick={handleNavigateHomeForm}>
+            <RefreshIcon fontSize="small" />
+          </button>
+        </div>
         <div className="schedule-view-container">
           {data
             .filter((meeting) => isSameDay(new Date(meeting.date), selectedDay))
@@ -203,7 +228,7 @@ const HomePage = () => {
                         onClick={() => handleDeleteAppointment(meeting.id)}
                         className="delete-meeting-button"
                       >
-                        G
+                        <DeleteIcon fontSize="small" />
                       </button>
                     </div>
                     <div className="breakpoint">

@@ -178,6 +178,26 @@
   right: 0.1rem;
 }
 
+.appointment-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.refresh-button {
+  height: 10%;
+  width: 10%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--serious-green);
+  color: var(--faded-black);
+}
+
+.refresh-button:hover {
+  background-color: var(--dark-background);
+  color: var(--serious-green);
+}
+
 .schedule-view {
   border-radius: 0.5rem;
   padding-bottom: 1.5rem;
@@ -194,10 +214,29 @@
   max-height: 80%;
 }
 
+.schedule-view-container::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 2rem;
+}
+
+.schedule-view-container::-webkit-scrollbar-track {
+  background: var(--faded-black); /* Background of the scrollbar track */
+}
+
+.schedule-view-container::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+  border: 2px solid var(--accent-color); /* Border around the scrollbar thumb */
+}
+
+.schedule-view-container::-webkit-scrollbar-thumb:hover {
+  background-color: var(--dark-serious-orange); /* Darker color when hovered */
+}
+
 .schedule-title {
   font-size: 2.5rem;
   padding: 1rem;
-  font-weight: 800;
+  font-weight: 200;
   color: var(--white);
 }
 
@@ -260,7 +299,7 @@
 
 .delete-meeting-button {
   background-color: var(--black);
-  color: var(--accent-color);
+  color: var(--light-gray);
   border: 2px solid var(--black); /* Corrected border declaration */
   padding: 0.8rem;
   border-radius: 2rem;
@@ -269,6 +308,11 @@
   display: flex; /* Enables flexbox */
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
+}
+
+.delete-meeting-button :hover {
+  background-color: var(--black);
+  color: var(--serious-red);
 }
 
 .meeting-notes-container {
