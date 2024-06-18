@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useGetInfo, useUserProfile } from "../hooks/useQueryHooks";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
 import "./PageStyles/PageStyles.css";
+import WeekendIcon from "@mui/icons-material/Weekend";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import WorkIcon from "@mui/icons-material/Work";
 
 const AccountPage = () => {
   const navigate = useNavigate();
@@ -36,87 +40,88 @@ const AccountPage = () => {
     });
   };
 
-  const handleNavigateSettingsForm = () => {
-    navigate("/settings", {
-      state: { userProfileId: userData?.id },
-    });
-  };
-
-  const handleNavigateHomeForm = () => {
-    navigate("/", {
-      state: { userProfileId: userData?.id },
-    });
-  };
-
   if (isUserLoading) {
     return <div>Loading user data...</div>;
   }
 
   return (
-    <div className="user-info-container">
-      <div className="user-info-wrapper">
-        <h1 className="user-info-heading">Welcome</h1>
-        <h1 className="user-info-username">
-          {userData ? userData.user_name : "Loading..."}
-        </h1>
-        <div className="general-info-container">
-          <div className="weekend-status-container">
-            <h3 className="user-info-h3">Weekend Status:</h3>
-            <span className="user-info-span">
-              {isAvailabilityLoading
-                ? "Loading availability..."
-                : orgInfo
-                ? orgInfo.exclude_weekends
-                  ? "Your organisation does not work weekends"
-                  : "Your organisation works weekends"
-                : "Edit Organisation"}
-            </span>
-          </div>
-          <h3 className="user-info-h3">Services Offered:</h3>
-          <span className="user-info-span">
-            {isAvailabilityLoading
-              ? "Loading services..."
-              : orgInfo
-              ? orgInfo.service_offered
-              : "..."}
-          </span>
-          <h3 className="user-info-h3">Working Hours:</h3>
-          <span className="user-info-span">
-            {isAvailabilityLoading
-              ? "Loading hours..."
-              : orgInfo
-              ? `${orgInfo?.start_hour} - ${orgInfo?.end_hour}`
-              : "edit info"}
-          </span>
-          <h3 className="user-info-h3">Location:</h3>
-          <span className="user-info-span">
-            {isAvailabilityLoading
-              ? "Loading location..."
-              : orgInfo
-              ? orgInfo.location
-              : "Edit Location"}
-          </span>
-        </div>
+    <div className="user-info-container-parent">
+      <h1 className="user-info-username">
+        {userData ? userData.user_name : "Loading..."}
+      </h1>
+      <div className="breakpoint-2">
+        <hr />
       </div>
-      <div className="user-button-container">
-        <button
-          className="user-info-org-button"
-          onClick={handleNavigateToAvailabilityForm}
-        >
-          Edit Organisation
-        </button>
-        <button
-          className="user-info-settings-button"
-          onClick={handleNavigateSettingsForm}
-        >
-          Settings
-        </button>
-        <button
-          className="user-schedule-settings-button"
-          onClick={handleNavigateHomeForm}
-        >
-          Schedule
-        </button>
+      <div className="user-info-container-child">
+        <div className="user-info-wrapper">
+          <div className="general-info-container">
+            <div className="account-info-general-container">
+              <div className="acc-icon-header-container">
+                <WeekendIcon />
+                <h3 className="user-info-h3">Weekend Status</h3>
+              </div>
+              <span className="user-info-span">
+                {isAvailabilityLoading
+                  ? "Loading availability..."
+                  : orgInfo
+                  ? orgInfo.exclude_weekends
+                    ? "Unavailable"
+                    : "Available"
+                  : "Edit Organisation"}
+              </span>
+            </div>
+            <div className="account-info-general-container">
+              <div className="acc-icon-header-container">
+                <WorkIcon />
+                <h3 className="user-info-h3">Services Offered</h3>
+              </div>
+
+              <span className="user-info-span">
+                {isAvailabilityLoading
+                  ? "Loading services..."
+                  : orgInfo
+                  ? orgInfo.service_offered
+                  : "..."}
+              </span>
+            </div>
+
+            <div className="account-info-general-container">
+              <div className="acc-icon-header-container">
+                <AccessTimeIcon />
+                <h3 className="user-info-h3">Working Hours</h3>
+              </div>
+              <span className="user-info-span">
+                {isAvailabilityLoading
+                  ? "Loading hours..."
+                  : orgInfo
+                  ? `${orgInfo?.start_hour} - ${orgInfo?.end_hour}`
+                  : "edit info"}
+              </span>
+            </div>
+            <div className="account-info-general-container">
+              <div className="acc-icon-header-container">
+                <LocationOnIcon />
+                <h3 className="user-info-h3">Location</h3>
+              </div>
+
+              <span className="user-info-span">
+                {isAvailabilityLoading
+                  ? "Loading location..."
+                  : orgInfo
+                  ? orgInfo.location
+                  : "Edit Location"}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="user-button-container">
+          <button
+            className="user-info-org-button"
+            onClick={handleNavigateToAvailabilityForm}
+          >
+            Edit Organisation
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -326,10 +326,29 @@
   max-width: 60%;
   color: var(--faded-black);
 }
-.user-info-container {
+
+.user-info-container-parent {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.user-info-username {
+  font-size: 8vh;
+  font-weight: 200;
+  margin-bottom: -2rem;
+}
+.breakpoint-2 {
+  margin: -2rem;
+}
+
+.user-info-container-child {
+  justify-content: center;
+  align-items: center;
   font-family: "Inter", sans-serif;
-  padding: 2rem;
-  background-color: var(--sidebar-background);
+  max-width: 60vw;
+  padding: 3vw;
+  background-color: var(--light-gray);
   border-radius: 1rem;
   overflow-y: auto;
 }
@@ -341,13 +360,19 @@
   padding-bottom: 1rem;
 }
 
-.user-info-username {
-  margin-top: -1rem;
-  font-size: 1.5rem;
-  font-weight: 200;
-  padding-bottom: 2rem;
+.account-info-general-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
 }
 
+.acc-icon-header-container {
+  display: flex;
+  gap: 2vw;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--faded-black);
+}
 .user-info-h3 {
   font-size: 1.2rem;
   font-weight: 500;
@@ -356,57 +381,27 @@
 }
 
 .user-info-span {
-  font-size: 0.8rem;
-  font-weight: 200;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--faded-black);
 }
 
 .user-info-org-button {
-  background-color: var(--accent-color);
-  color: var(--faded-black);
+  background-color: var(--black);
+  color: var(--white);
   font-weight: 500;
-  border: 2px solid var(--dark-gray); /* Corrected border declaration */
-  padding: 0.6rem;
+  padding: 0.8rem;
   border-radius: 2rem;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 0.9rem;
-  margin: 0.2rem 2px;
+  font-size: 1rem;
+  margin: 1rem 2px;
   width: 100%;
 }
 .user-info-org-button:hover {
-  background-color: var(--serious-brown);
-  color: var(--faded-black);
-}
-
-.user-info-settings-button {
   background-color: var(--dark-background);
-  color: var(--light-gray); /* Assuming this is the desired text color */
-  border: 2px solid var(--dark-gray); /* Corrected border declaration */
-  padding: 0.6rem;
-  border-radius: 2rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 0.9rem;
-  margin-top: 0.1rem;
-  margin: 0.2rem 2px;
-  width: 100%;
-}
-
-.user-schedule-settings-button {
-  background-color: var(--black);
-  color: var(--light-gray); /* Assuming this is the desired text color */
-  border: 2px solid var(--dark-gray); /* Corrected border declaration */
-  padding: 0.6rem;
-  border-radius: 2rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 0.9rem;
-  margin-top: 0.1rem;
-  margin: 0.2rem 2px;
-  width: 100%;
+  color: var(--white);
 }
 
 /* New Class for outside month days */
