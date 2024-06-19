@@ -62,24 +62,31 @@ const SignupForm = () => {
           }}
         >
           <Form>
-            <label htmlFor="email">Email Address</label>
-            <Field name="email" type="email" as="input" />
+            <Field name="email" type="email" as="input" placeholder="email" />
             <ErrorMessage
               name="email"
               component="div"
               className="error-message"
             />
 
-            <label htmlFor="password">Password</label>
-            <Field name="password" type="password" as="input" />
+            <Field
+              name="password"
+              type="password"
+              as="input"
+              placeholder="password"
+            />
             <ErrorMessage
               name="password"
               component="div"
               className="error-message"
             />
 
-            <label htmlFor="re_password">Confirm Password</label>
-            <Field name="re_password" type="password" as="input" />
+            <Field
+              name="re_password"
+              type="password"
+              as="input"
+              placeholder="confirm password"
+            />
             <ErrorMessage
               name="re_password"
               component="div"

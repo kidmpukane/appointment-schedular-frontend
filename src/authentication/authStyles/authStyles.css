@@ -20,11 +20,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
 }
 
 .form-view {
-  background-color: var(--sidebar-background);
+  background-color: var(--light-gray);
   border-radius: 1rem;
   padding: 2rem;
   width: 25rem;
@@ -34,10 +34,11 @@
 form {
   display: flex;
   flex-direction: column;
+  gap: 1vw;
 }
 
 label {
-  color: var(--accent-color);
+  color: var(--faded-black);
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
@@ -45,10 +46,10 @@ label {
 input {
   padding: 1rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--light-gray);
-  border-radius: 1.5em;
-  background-color: var(--faded-black);
-  color: var(--white);
+  border: 2px solid var(--dark-gray);
+  border-radius: 1rem;
+  background-color: var(--medium-gray);
+  color: var(--black);
 }
 
 button {
@@ -71,11 +72,11 @@ button:hover {
 }
 
 p {
-  color: var(--medium-gray);
+  color: var(--black);
 }
 
 a {
-  color: var(--accent-color);
+  color: var(--serious-green);
   text-decoration: none;
 }
 

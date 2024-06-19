@@ -91,16 +91,19 @@ const LoginForm = () => {
           onSubmit={handleLogin}
         >
           <Form>
-            <label htmlFor="email">Email Address</label>
-            <Field name="email" type="email" as="input" />
+            <Field name="email" type="email" as="input" placeholder="email" />
             <ErrorMessage
               name="email"
               component="div"
               className="error-message"
             />
 
-            <label htmlFor="password">Password</label>
-            <Field name="password" type="password" as="input" />
+            <Field
+              name="password"
+              type="password"
+              as="input"
+              placeholder="password"
+            />
             <ErrorMessage
               name="password"
               component="div"
