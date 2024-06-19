@@ -629,4 +629,7 @@
   .settings-form-parent-container {
     height: 60vh;
   }
+  .user-info-username {
+    font-size: 2em;
+  }
 }
