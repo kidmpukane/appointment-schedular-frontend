@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "../authentication/authStyles/authStyles.css";
 
 const monthNames = [
@@ -132,15 +134,17 @@ const AppointmentPage = () => {
         <div className="month-header">
           <div className="navigation-buttons">
             <div className="calendar-header-container">
-              <button onClick={previousMonth} className="prev-month-button">
-                {"<"}
-              </button>
               <h2 className="month-title">
                 {monthNames[currentMonth]} {currentYear}
               </h2>
-              <button onClick={nextMonth} className="next-month-button">
-                {">"}
-              </button>
+              <div className="arrow-button-container">
+                <button onClick={previousMonth} className="prev-month-button">
+                  <ArrowBackIosIcon fontSize="small" />
+                </button>
+                <button onClick={nextMonth} className="next-month-button">
+                  <ArrowForwardIosIcon fontSize="small" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -197,18 +201,20 @@ const AppointmentPage = () => {
         </div>
       </div>
       {isFormOpen && (
-        <div className="appointment-form-wrapper">
-          <AppointmentForm
-            selectedDay={selectedDay}
-            onClose={() => setIsFormOpen(false)}
-          />
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <AppointmentForm
+              selectedDay={selectedDay}
+              onClose={() => setIsFormOpen(false)}
+            />
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-const TimeSlots = ({ selectedDay }) => {
+const TimeSlots = ({ selectedDay, onTimeSlotSelect }) => {
   const generateTimeSlots = () => {
     const slots = [];
     const startDate = new Date(
@@ -256,38 +262,47 @@ const TimeSlots = ({ selectedDay }) => {
       return false;
     }
 
-    if (backendConfig.exclude_months.split(",").includes(String(month))) {
+    if (backendConfig.exclude_days.split(",").includes(String(day))) {
       return false;
     }
 
-    if (backendConfig.exclude_days.split(",").includes(String(day))) {
+    if (backendConfig.exclude_months.split(",").includes(String(month))) {
       return false;
     }
 
     return true;
   };
 
-  const timeSlots = generateTimeSlots();
+  const slots = generateTimeSlots();
 
   return (
-    <>
-      {timeSlots.map(({ slotStart, slotEnd }, idx) => (
-        <option
-          key={idx}
-          value={`${slotStart.toISOString()} - ${slotEnd.toISOString()}`}
-        >
-          {slotStart.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}{" "}
-          -{" "}
-          {slotEnd.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </option>
-      ))}
-    </>
+    <div className="time-slots">
+      <select onChange={onTimeSlotSelect}>
+        <option value="">Select a time slot</option>
+        {slots.map(({ slotStart, slotEnd }, idx) => (
+          <option
+            key={idx}
+            value={`${slotStart.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })} - ${slotEnd.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}`}
+          >
+            {slotStart.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}{" "}
+            -{" "}
+            {slotEnd.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 
@@ -332,18 +347,10 @@ const AppointmentForm = ({ selectedDay, onClose }) => {
       <form onSubmit={handleSubmit}>
         <div className="form-left">
           <div>
-            <select
-              name="time_slot"
-              value={
-                selectedTimeSlot
-                  ? `${selectedTimeSlot.start} - ${selectedTimeSlot.end}`
-                  : ""
-              }
-              onChange={handleTimeSlotChange}
-            >
-              <option value="">Select a time slot</option>
-              {selectedDay && <TimeSlots selectedDay={selectedDay} />}
-            </select>
+            <TimeSlots
+              selectedDay={selectedDay}
+              onTimeSlotSelect={handleTimeSlotChange}
+            />
           </div>
           <div>
             <input
@@ -369,7 +376,7 @@ const AppointmentForm = ({ selectedDay, onClose }) => {
             <input
               type="text"
               name="location"
-              placeholder="location"
+              placeholder="Location"
               value={formData.location}
               onChange={handleChange}
             />

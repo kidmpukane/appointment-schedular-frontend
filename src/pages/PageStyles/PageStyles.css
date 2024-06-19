@@ -58,15 +58,6 @@
   color: var(--black);
 }
 
-/* .navigation-buttons button {
-  background-color: var(--black);
-  border: none;
-  padding: 0.2rem 0.2rem;
-  border-radius: 2rem;
-  cursor: pointer;
-  color: var(--white);
-} */
-
 .prev-month-button {
   background-color: var(--black);
   padding: 0.5em;
