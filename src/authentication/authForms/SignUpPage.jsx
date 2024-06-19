@@ -53,7 +53,8 @@ const SignupForm = () => {
               });
               console.log("Signup successful:", response.data);
               if (response.data.csrf_token && response.data.sessionid) {
-                window.location.reload() && navigate("/");
+                navigate("/availability-registration-form");
+                window.location.reload();
               }
             } catch (error) {
               console.error("Signup error:", error);

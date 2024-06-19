@@ -1,47 +1,16 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./PageStyles/PageStyles.css";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
-import { useAvailabilityPost, useGetInfo } from "../hooks/useQueryHooks";
+import { useAvailabilityPost } from "../hooks/useQueryHooks";
 
 function AvailabilityRegistrationPage() {
   const { authInfo } = useContext(AuthenticationContext);
-  const infoUrl = authInfo.userId
-    ? `http://127.0.0.1:8000/user_profile/fetch-user-profile/${authInfo.userId}/`
-    : null;
-  const { data: profileData, isLoading, isError, error } = useGetInfo(infoUrl);
-
-  useEffect(() => {
-    if (profileData) {
-      setFormData((prev) => ({
-        ...prev,
-        provider: {
-          userProfileId: profileData.id,
-        },
-      }));
-    }
-  }, [profileData]);
-
-  console.log(
-    `Your id is ${authInfo.userId}, if you're seeing this you're all set`
-  );
-
-  if (isLoading) {
-    return <p>Loading profile data...</p>;
-  }
-
-  if (isError) {
-    return <p>Error loading profile data: {error.message}</p>;
-  }
-
-  if (!profileData) {
-    return <p>No profile data found</p>;
-  }
-
-  console.log(`Profile Id: ${profileData.id}`);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     provider: {
-      userProfileId: "",
+      userProfileId: authInfo.profileId,
     },
     exclude_months: [],
     exclude_particular_days: [],
@@ -53,11 +22,24 @@ function AvailabilityRegistrationPage() {
     timezone: "UTC",
   });
 
+  console.log(
+    `Your id is ${authInfo.userId}, if you're seeing this you're all set`
+  );
+  console.log(`Profile Id: ${authInfo.profileId}`);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleDateChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: [...prev[name], value],
     }));
   };
 
@@ -71,17 +53,15 @@ function AvailabilityRegistrationPage() {
     error: submitError,
   } = useAvailabilityPost(authInfo, availabilityUrlPost);
 
-  const handleDateChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: [...prev[name], value],
-    }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    submitAvailability(formData);
+    submitAvailability(formData, {
+      onSuccess: (response) => {
+        if (response.status === 201) {
+          navigate("/home");
+        }
+      },
+    });
   };
 
   const monthOptions = [
