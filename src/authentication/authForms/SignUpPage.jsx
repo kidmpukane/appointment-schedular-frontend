@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthenticationContext } from "../authProviders/AuthenticationProvider";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -53,7 +53,7 @@ const SignupForm = () => {
               });
               console.log("Signup successful:", response.data);
               if (response.data.csrf_token && response.data.sessionid) {
-                navigate("/availability-registration-form");
+                navigate("/availability-registration-form", { replace: true });
                 window.location.reload();
               }
             } catch (error) {
