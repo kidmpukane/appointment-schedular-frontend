@@ -255,10 +255,6 @@
   padding: 1.4rem;
   border-radius: 1.5rem;
 }
-/* .meeting-list {
-  list-style-type: none;
-  padding: 0;
-} */
 
 .meeting-time-date-container {
   display: grid;
@@ -548,7 +544,7 @@
 @media (max-width: 1200px) {
   .calendar-container-home {
     display: block;
-    margin-top: 20vw;
+    margin-top: 15vw;
   }
   .availability-registration-container form {
     display: flex;
@@ -574,6 +570,10 @@
   .month-header {
     font-size: 2.2vw;
   }
+  .schedule-title {
+    font-size: 1.2em;
+    padding: 5vw;
+  }
 
   .refresh-button {
     height: 10vw;
@@ -583,6 +583,7 @@
     background-color: var(--serious-green);
     color: var(--faded-black);
   }
+
   .schedule-view-container {
     max-height: 48vw;
   }
