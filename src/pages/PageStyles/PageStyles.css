@@ -22,10 +22,11 @@
   grid-template-columns: auto auto auto auto;
   gap: 1rem;
   background-color: var(--faded-black);
+  max-height: 100vh;
 }
 
 .calendar-view-home {
-  max-height: 80vh;
+  max-height: 100vh;
   background-color: var(--light-gray);
   border-radius: 2rem;
   padding: 3%;
@@ -331,13 +332,15 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
 }
 .user-info-username {
   font-size: 8vh;
   font-weight: 200;
+  padding: 2rem;
 }
 .breakpoint-2 {
+  padding-bottom: 2rem;
 }
 
 .user-info-container-child {
@@ -501,9 +504,51 @@
   background-color: var(--dark-background);
 }
 
+.settings-form-parent-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+}
+
+.settings-form-container {
+  display: grid;
+  background-color: var(--light-gray);
+  padding: 2vw;
+  border-radius: 1rem;
+  gap: 1rem;
+}
+
+.settings-form-container form input,
+.settings-form-container form select {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  border: 2px solid var(--dark-gray);
+  background-color: var(--medium-gray);
+  color: var(--dark-background);
+}
+
+.settings-heading {
+  font-weight: 300;
+  color: var(--dark-gray);
+  font-size: 8vh;
+  font-weight: 200;
+  padding: 2rem;
+}
+
+.settings-submit {
+}
+
+.settings-logout {
+  background-color: var(--serious-red);
+  width: 100%;
+}
+
 @media (max-width: 1200px) {
   .calendar-container-home {
     display: block;
+    margin-top: 20vw;
   }
   .availability-registration-container form {
     display: flex;
@@ -538,7 +583,9 @@
     background-color: var(--serious-green);
     color: var(--faded-black);
   }
-
+  .schedule-view-container {
+    max-height: 48vw;
+  }
   .meeting-time-date-container {
     display: grid;
   }
@@ -585,5 +632,9 @@
   .availability-registration-container form button {
     height: 10vw;
     width: 100%;
+  }
+
+  .settings-form-parent-container {
+    height: 60vh;
   }
 }

@@ -68,27 +68,36 @@ const Settings = () => {
   };
 
   return (
-    <div>
-      <h1>Settings</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="user_name">Username:</label>
-          <input
-            type="text"
-            id="user_name"
-            name="user_name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          Save Changes
+    <div className="settings-form-parent-container">
+      <h1 className="settings-heading">Settings</h1>
+      <div className="settings-form-container">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="user_name"></label>
+            <input
+              type="text"
+              id="user_name"
+              name="user_name"
+              placeholder="change username"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            className="settings-submit"
+            type="submit"
+            disabled={isLoading}
+          >
+            Save Changes
+          </button>
+        </form>
+        {success && <p>Username updated successfully!</p>}
+        {error && <p>{error}</p>}
+        <button className="settings-logout" onClick={handleLogout}>
+          Log Out
         </button>
-      </form>
-      {success && <p>Username updated successfully!</p>}
-      {error && <p>{error}</p>}
-      <button onClick={handleLogout}>Log Out</button>
+      </div>
     </div>
   );
 };
