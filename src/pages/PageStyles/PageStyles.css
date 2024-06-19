@@ -632,4 +632,8 @@
   .user-info-username {
     font-size: 2em;
   }
+
+  .availability-registration-container {
+    margin-top: 16vw;
+  }
 }
