@@ -57,22 +57,28 @@ const useUserProfile = (userId, csrfToken, sessionId) => {
 
 const useAvailabilityPost = (authInfo, availabilityUrlPost) => {
   const submitAvailability = async (formData) => {
-    const response = await axios.post(
-      availabilityUrlPost,
-      {
+    try {
+      const dataToSend = {
         ...formData,
         provider: formData.provider.userProfileId,
-      },
-      {
+      };
+
+      const csrfToken = getCsrfToken();
+
+      const response = await axios.post(availabilityUrlPost, dataToSend, {
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken": authInfo.csrfToken,
+          "X-CSRFToken": csrfToken,
           sessionid: authInfo.sessionId,
         },
         withCredentials: true,
-      }
-    );
-    return response.data;
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error response:", error.response);
+      throw error;
+    }
   };
 
   return useMutation(submitAvailability);

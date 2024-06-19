@@ -1,17 +1,47 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./PageStyles/PageStyles.css";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
-import { useLocation } from "react-router-dom";
-import { useAvailabilityPut } from "../hooks/useQueryHooks";
+import { useAvailabilityPost, useGetInfo } from "../hooks/useQueryHooks";
 
 function AvailabilityRegistrationPage() {
   const { authInfo } = useContext(AuthenticationContext);
-  const location = useLocation();
-  const userProfileId = location.state?.userProfileId || null;
+  const infoUrl = authInfo.userId
+    ? `http://127.0.0.1:8000/user_profile/fetch-user-profile/${authInfo.userId}/`
+    : null;
+  const { data: profileData, isLoading, isError, error } = useGetInfo(infoUrl);
+
+  useEffect(() => {
+    if (profileData) {
+      setFormData((prev) => ({
+        ...prev,
+        provider: {
+          userProfileId: profileData.id,
+        },
+      }));
+    }
+  }, [profileData]);
+
+  console.log(
+    `Your id is ${authInfo.userId}, if you're seeing this you're all set`
+  );
+
+  if (isLoading) {
+    return <p>Loading profile data...</p>;
+  }
+
+  if (isError) {
+    return <p>Error loading profile data: {error.message}</p>;
+  }
+
+  if (!profileData) {
+    return <p>No profile data found</p>;
+  }
+
+  console.log(`Profile Id: ${profileData.id}`);
 
   const [formData, setFormData] = useState({
     provider: {
-      userProfileId: userProfileId,
+      userProfileId: "",
     },
     exclude_months: [],
     exclude_particular_days: [],
@@ -31,15 +61,15 @@ function AvailabilityRegistrationPage() {
     }));
   };
 
-  let availabilityUrlPut =
-    "127.0.0.1:8000/availability/availability/register-availability/";
+  let availabilityUrlPost =
+    "http://127.0.0.1:8000/availability/register-availability/";
 
   const {
     mutate: submitAvailability,
-    isLoading,
-    isError,
-    error,
-  } = useAvailabilityPut(authInfo, availabilityUrlPut);
+    isLoading: isSubmitting,
+    isError: isSubmitError,
+    error: submitError,
+  } = useAvailabilityPost(authInfo, availabilityUrlPost);
 
   const handleDateChange = (e) => {
     const { name, value } = e.target;
@@ -71,8 +101,10 @@ function AvailabilityRegistrationPage() {
 
   return (
     <div className="availability-registration-container">
-      {isLoading && <p>Submitting availability...</p>}
-      {isError && <p>Error submitting availability: {error.message}</p>}
+      {isSubmitting && <p>Submitting availability...</p>}
+      {isSubmitError && (
+        <p>Error submitting availability: {submitError.message}</p>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="full-width">
           <label>Exclude Months:</label>
