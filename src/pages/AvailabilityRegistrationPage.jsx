@@ -58,7 +58,7 @@ function AvailabilityRegistrationPage() {
     submitAvailability(formData, {
       onSuccess: (response) => {
         if (response.status === 201) {
-          navigate("/home", { replace: true });
+          navigate("/", { replace: true });
           window.location.reload();
         }
       },

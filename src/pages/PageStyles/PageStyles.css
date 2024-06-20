@@ -145,8 +145,12 @@
 }
 
 .selected-month {
-  background-color: var(--white);
-  color: var(--light-gray);
+  background-color: var(--serious-red);
+  color: var(--white);
+  font-weight: 400;
+  padding: 0.1rem;
+  width: 40%;
+  border-radius: 0.6rem;
 }
 
 .selected-day {
