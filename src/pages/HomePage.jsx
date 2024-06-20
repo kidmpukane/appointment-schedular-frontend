@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./PageStyles/PageStyles.css";
-import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
-import { useGetInfo, useUserProfile } from "../hooks/useQueryHooks";
+import { useUserProfile } from "../hooks/useQueryHooks";
+import useCheckAvailability from "../hooks/useCheckAvailability";
 
 const monthNames = [
   "January",
@@ -33,18 +33,12 @@ const getDaysInMonth = (year, monthIndex) => {
   const daysInPrevMonth = new Date(year, monthIndex, 0).getDate();
 
   const dates = [];
-
-  // Fill in days from the previous month
   for (let i = firstDayOfMonth - 1; i >= 0; i--) {
     dates.push({ day: daysInPrevMonth - i, monthOffset: -1 });
   }
-
-  // Fill in days from the current month
   for (let day = 1; day <= daysInMonth; day++) {
     dates.push({ day, monthOffset: 0 });
   }
-
-  // Fill in days from the next month
   const remainingDays = 42 - dates.length;
   for (let i = 1; i <= remainingDays; i++) {
     dates.push({ day: i, monthOffset: 1 });
@@ -56,7 +50,7 @@ const getDaysInMonth = (year, monthIndex) => {
 const formatTime = (timeString) => {
   const [hours, minutes] = timeString.split(":").slice(0, 2).map(Number);
   const period = hours >= 12 ? "PM" : "AM";
-  const displayHours = hours % 12 || 12; // Convert midnight (0) to 12 AM
+  const displayHours = hours % 12 || 12;
   const formattedHours = String(displayHours).padStart(2, "0");
   const formattedMinutes = String(minutes).padStart(2, "0");
   return `${formattedHours}:${formattedMinutes} ${period}`;
@@ -64,12 +58,17 @@ const formatTime = (timeString) => {
 
 const HomePage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { authInfo } = useContext(AuthenticationContext);
+
   const userProfileId = location.state?.userProfileId || null;
 
   const [data, setData] = useState([]);
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  const isLoading = useCheckAvailability();
 
   useEffect(() => {
     if (userProfileId) {
@@ -132,9 +131,6 @@ const HomePage = () => {
       });
   };
 
-  const navigate = useNavigate();
-  const { authInfo } = useContext(AuthenticationContext);
-
   const { data: userData, isLoading: isUserLoading } = useUserProfile(
     authInfo.userId,
     authInfo.csrfToken,
@@ -146,6 +142,10 @@ const HomePage = () => {
       state: { userProfileId: userData?.id },
     });
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="calendar-container-home">
