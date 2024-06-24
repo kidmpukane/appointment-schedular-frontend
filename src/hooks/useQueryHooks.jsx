@@ -164,10 +164,36 @@ const useProfilePut = (authInfo, profileUrlPut) => {
   return useMutation(submitProfile);
 };
 
+const useGetAuthInfo = (queryKey, url) => {
+  const fetchInfo = async () => {
+    if (!url) {
+      throw new Error("URL is not defined");
+    }
+
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  };
+
+  return useQuery([queryKey, url], fetchInfo, {
+    enabled: !!url,
+    retry: 3,
+    retryDelay: 1000,
+    onError: (error) => {
+      console.error(`Error in ${queryKey} query:`, error);
+    },
+  });
+};
+
 export {
   useGetInfo,
   useUserProfile,
   useAvailabilityPut,
   useAvailabilityPost,
   useProfilePut,
+  useGetAuthInfo,
 };
