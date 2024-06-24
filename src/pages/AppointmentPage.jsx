@@ -10,7 +10,12 @@ const AppointmentPage = () => {
     error: errorOrgInfo,
   } = useGetAuthInfo("orgInfo", organisationInfoUrl);
 
-  const providerId = orgInfoData?.[0]?.id;
+  // Check if orgInfoData is an array and has elements before accessing [0]
+  const providerId =
+    Array.isArray(orgInfoData) && orgInfoData.length > 0
+      ? orgInfoData[0]?.provider?.id
+      : null;
+
   const appointmentsUrl = providerId
     ? `http://127.0.0.1:8000/appointments/get-appointment/${providerId}/`
     : null;
