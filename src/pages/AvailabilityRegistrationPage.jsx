@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PageStyles/PageStyles.css";
 import { AuthenticationContext } from "../authentication/authProviders/AuthenticationProvider";
@@ -10,7 +10,7 @@ function AvailabilityRegistrationPage() {
 
   const [formData, setFormData] = useState({
     provider: {
-      userProfileId: authInfo.profileId,
+      userProfileId: null, // Initialize with null or a placeholder value
     },
     exclude_months: [],
     exclude_particular_days: [],
@@ -22,10 +22,22 @@ function AvailabilityRegistrationPage() {
     timezone: "UTC",
   });
 
+  useEffect(() => {
+    if (authInfo && authInfo.profileId) {
+      setFormData((prev) => ({
+        ...prev,
+        provider: {
+          userProfileId: authInfo.profileId,
+        },
+      }));
+    }
+  }, [authInfo]);
+
   console.log(
     `Your id is ${authInfo.userId}, if you're seeing this you're all set`
   );
   console.log(`Profile Id: ${authInfo.profileId}`);
+  console.log("Initial formData:", formData);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -55,6 +67,7 @@ function AvailabilityRegistrationPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form data at submit:", formData);
     submitAvailability(formData, {
       onSuccess: (response) => {
         if (response.status === 201) {
@@ -117,7 +130,7 @@ function AvailabilityRegistrationPage() {
           />
           <div>
             {formData.exclude_particular_days.map((day, index) => (
-              <span key={index} className="selected-day">
+              <span key={index} className="selected-day-ava">
                 {new Date(day).toLocaleDateString()}
               </span>
             ))}

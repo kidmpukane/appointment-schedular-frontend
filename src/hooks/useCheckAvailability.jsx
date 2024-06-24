@@ -9,6 +9,13 @@ const useCheckAvailability = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!authInfo || !authInfo.profileId) {
+      console.log("authInfo or profileId is not defined yet.");
+      return;
+    }
+
+    console.log(`Check Availability Hook: ${authInfo.profileId}`);
+
     const checkAvailability = async () => {
       try {
         const response = await axios.get(
@@ -30,7 +37,7 @@ const useCheckAvailability = () => {
     };
 
     checkAvailability();
-  }, [authInfo.profileId, navigate]);
+  }, [authInfo, navigate]);
 
   return isLoading;
 };

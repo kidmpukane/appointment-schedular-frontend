@@ -105,7 +105,7 @@ function AvailabilityEditPage() {
             />
             <div>
               {formData.exclude_particular_days.map((day, index) => (
-                <span key={index} className="selected-day">
+                <span key={index} className="selected-day-ava">
                   {new Date(day).toLocaleDateString()}
                 </span>
               ))}

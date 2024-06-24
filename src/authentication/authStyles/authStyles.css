@@ -213,7 +213,7 @@ a:hover {
 .day-container {
 }
 
-.selected-day {
+.selected-day-ava {
   background-color: var(--serious-red);
   color: var(--white);
   font-weight: 400;

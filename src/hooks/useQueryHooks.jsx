@@ -58,10 +58,14 @@ const useUserProfile = (userId, csrfToken, sessionId) => {
 const useAvailabilityPost = (authInfo, availabilityUrlPost) => {
   const submitAvailability = async (formData) => {
     try {
+      console.log("Form data before processing:", formData);
+
       const dataToSend = {
         ...formData,
         provider: formData.provider.userProfileId,
       };
+
+      console.log("Data to send:", dataToSend);
 
       const csrfToken = getCsrfToken();
 
@@ -74,6 +78,8 @@ const useAvailabilityPost = (authInfo, availabilityUrlPost) => {
         withCredentials: true,
       });
 
+      console.log("Response data:", response.data);
+
       return response.data;
     } catch (error) {
       console.error("Error response:", error.response);
@@ -83,6 +89,8 @@ const useAvailabilityPost = (authInfo, availabilityUrlPost) => {
 
   return useMutation(submitAvailability);
 };
+
+export default useAvailabilityPost;
 
 const getCsrfToken = () => {
   let csrfToken = null;
