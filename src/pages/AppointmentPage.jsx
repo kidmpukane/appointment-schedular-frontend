@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -79,7 +80,13 @@ const getDaysInMonth = (year, monthIndex) => {
 };
 
 const AppointmentPage = () => {
-  const organisationInfoUrl = `http://127.0.0.1:8000/availability/availability/Athens/`;
+  const { username } = useParams();
+
+  useEffect(() => {
+    console.log("Username:", username);
+  }, [username]);
+
+  const organisationInfoUrl = `http://127.0.0.1:8000/availability/availability/${username}/`;
 
   const {
     isLoading: isLoadingOrgInfo,
@@ -99,7 +106,7 @@ const AppointmentPage = () => {
       : backendConfig;
 
   // Use useEffect to fetch appointments
-  React.useEffect(() => {
+  useEffect(() => {
     if (providerId) {
       axios
         .get(
@@ -278,55 +285,6 @@ const AppointmentPage = () => {
           </div>
         </div>
       )}
-    </div>
-  );
-};
-
-const TimeSlots = ({ selectedDay, onTimeSlotSelect, availabilitySpecs }) => {
-  const generateTimeSlots = () => {
-    const slots = [];
-    const startHour = availabilitySpecs?.start_hour || "09:00:00";
-    const endHour = availabilitySpecs?.end_hour || "17:00:00";
-    const workBlock = availabilitySpecs?.work_block || "00:30:00";
-
-    const startDate = new Date(
-      `${selectedDay.toISOString().split("T")[0]}T${startHour}`
-    );
-    const endDate = new Date(
-      `${selectedDay.toISOString().split("T")[0]}T${endHour}`
-    );
-    const workBlockDuration = parseTimeString(workBlock);
-
-    let currentTime = startDate;
-    while (currentTime <= endDate) {
-      slots.push(new Date(currentTime));
-      currentTime = new Date(currentTime.getTime() + workBlockDuration);
-    }
-
-    return slots;
-  };
-
-  const parseTimeString = (timeString) => {
-    if (!timeString || typeof timeString !== "string") return 0;
-    const [hours, minutes, seconds] = timeString.split(":").map(Number);
-    return (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
-  };
-
-  const timeSlots = generateTimeSlots();
-
-  return (
-    <div className="time-slots">
-      <h3>Available Time Slots</h3>
-      <ul>
-        {timeSlots.map((slot, index) => (
-          <li key={index} onClick={() => onTimeSlotSelect(slot)}>
-            {slot.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
