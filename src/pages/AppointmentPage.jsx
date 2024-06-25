@@ -107,7 +107,7 @@ const AppointmentPage = () => {
         )
         .then((response) => {
           let appointmentData = response.data;
-          console.log(appointmentData);
+          // console.log(appointmentData);
         })
         .catch((error) => {
           console.log(error);
@@ -333,7 +333,7 @@ const TimeSlots = ({ selectedDay, onTimeSlotSelect, availabilitySpecs }) => {
 
 // Form validation schema using Yup
 const validationSchema = Yup.object({
-  fullName: Yup.string().required("Full Name is required"),
+  full_name: Yup.string().required("Full Name is required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
@@ -343,11 +343,11 @@ const validationSchema = Yup.object({
 });
 
 const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedTime, setSelectedTime] = useState("");
 
   const formik = useFormik({
     initialValues: {
-      fullName: "",
+      full_name: "",
       email: "",
       service: "",
       location: "",
@@ -357,8 +357,10 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
     onSubmit: (values) => {
       const appointmentData = {
         ...values,
+
+        service_provider: availabilitySpecs?.provider?.id,
         date: selectedDay.toISOString().split("T")[0],
-        time_slot: selectedTime.toLocaleTimeString("en-US", { hour12: false }),
+        time_slot: selectedTime,
       };
       // Submit appointmentData to the backend
       console.log(appointmentData);
@@ -366,9 +368,41 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
     },
   });
 
-  const handleTimeSlotSelect = (slot) => {
-    setSelectedTime(slot);
+  const generateTimeSlots = () => {
+    const slots = [];
+    const startHour = availabilitySpecs?.start_hour || "09:00:00";
+    const endHour = availabilitySpecs?.end_hour || "17:00:00";
+    const workBlock = availabilitySpecs?.work_block || "00:30:00";
+
+    const startDate = new Date(
+      `${selectedDay.toISOString().split("T")[0]}T${startHour}`
+    );
+    const endDate = new Date(
+      `${selectedDay.toISOString().split("T")[0]}T${endHour}`
+    );
+    const workBlockDuration = parseTimeString(workBlock);
+
+    let currentTime = startDate;
+    while (currentTime <= endDate) {
+      slots.push(
+        new Date(currentTime).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
+      currentTime = new Date(currentTime.getTime() + workBlockDuration);
+    }
+
+    return slots;
   };
+
+  const parseTimeString = (timeString) => {
+    if (!timeString || typeof timeString !== "string") return 0;
+    const [hours, minutes, seconds] = timeString.split(":").map(Number);
+    return (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
+  };
+
+  const timeSlots = generateTimeSlots();
 
   return (
     <div className="appointment-form">
@@ -376,11 +410,11 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
       <p>{selectedDay.toDateString()}</p>
       <form onSubmit={formik.handleSubmit}>
         <div>
-          <label htmlFor="fullName">Full Name</label>
           <input
-            id="fullName"
-            name="fullName"
+            id="full_name"
+            name="full_name"
             type="text"
+            placeholder="Enter Full Name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.fullName}
@@ -390,11 +424,11 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
           ) : null}
         </div>
         <div>
-          <label htmlFor="email">Email</label>
           <input
             id="email"
             name="email"
             type="email"
+            placeholder="Enter Email"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
@@ -404,11 +438,11 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
           ) : null}
         </div>
         <div>
-          <label htmlFor="service">Service</label>
           <input
             id="service"
             name="service"
             type="text"
+            placeholder="Enter Service"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.service}
@@ -418,10 +452,10 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
           ) : null}
         </div>
         <div>
-          <label htmlFor="location">Location</label>
           <input
             id="location"
             name="location"
+            placeholder="Enter Location"
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -432,10 +466,11 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
           ) : null}
         </div>
         <div>
-          <label htmlFor="notes">Notes</label>
           <textarea
             id="notes"
             name="notes"
+            className="appointment-notes"
+            placeholder="Add Notes..."
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.notes}
@@ -444,20 +479,25 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
             <div className="error">{formik.errors.notes}</div>
           ) : null}
         </div>
-        <TimeSlots
-          selectedDay={selectedDay}
-          onTimeSlotSelect={handleTimeSlotSelect}
-          availabilitySpecs={availabilitySpecs}
-        />
+        <div>
+          <label htmlFor="timeSlot">Select Time Slot</label>
+          <select
+            id="time_slot"
+            name="time_slot"
+            value={selectedTime}
+            onChange={(e) => setSelectedTime(e.target.value)}
+          >
+            <option value="" label="Select time slot" />
+            {timeSlots.map((slot, index) => (
+              <option key={index} value={slot}>
+                {slot}
+              </option>
+            ))}
+          </select>
+        </div>
         {selectedTime && (
           <div>
-            <p>
-              Selected Time:{" "}
-              {selectedTime.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
+            <p>Selected Time: {selectedTime}</p>
           </div>
         )}
         <button type="submit" disabled={!selectedTime}>
