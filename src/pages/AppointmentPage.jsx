@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
 import { useGetAuthInfo } from "../hooks/useQueryHooks";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -32,7 +34,7 @@ const dayNames = [
 
 const backendConfig = {
   exclude_months: "12",
-  exclude_days: "2, 14",
+  exclude_particular_days: "2, 14",
   exclude_weekends: true,
   work_block: "00:30:00",
   break_block: "00:30:00",
@@ -91,6 +93,11 @@ const AppointmentPage = () => {
       ? orgInfoData[0]?.provider?.id
       : null;
 
+  let availabilitySpecs =
+    Array.isArray(orgInfoData) && orgInfoData.length > 0
+      ? orgInfoData[0]
+      : backendConfig;
+
   // Use useEffect to fetch appointments
   React.useEffect(() => {
     if (providerId) {
@@ -136,14 +143,37 @@ const AppointmentPage = () => {
 
   const isDayBlocked = (day, dayOfWeek, monthIndex, monthOffset) => {
     if (monthOffset !== 0) return true;
-    if (backendConfig.exclude_weekends && (dayOfWeek === 0 || dayOfWeek === 6))
-      return true;
+
+    // Check for excluded weekends
     if (
-      backendConfig.exclude_months.split(",").includes(String(monthIndex + 1))
-    )
+      availabilitySpecs?.exclude_weekends &&
+      (dayOfWeek === 0 || dayOfWeek === 6)
+    ) {
       return true;
-    if (backendConfig.exclude_days.split(",").includes(String(day)))
+    }
+
+    // Check for excluded months
+    const excludedMonths =
+      Array.isArray(availabilitySpecs?.exclude_months) &&
+      availabilitySpecs.exclude_months.length > 0
+        ? availabilitySpecs.exclude_months.filter((m) => m !== null).map(String)
+        : [];
+    if (excludedMonths.includes(String(monthIndex + 1))) {
       return true;
+    }
+
+    // Check for excluded days
+    const excludedDays =
+      Array.isArray(availabilitySpecs?.exclude_particular_days) &&
+      availabilitySpecs.exclude_particular_days.length > 0
+        ? availabilitySpecs.exclude_particular_days
+            .filter((d) => d !== null)
+            .map(String)
+        : [];
+    if (excludedDays.includes(String(day))) {
+      return true;
+    }
+
     return false;
   };
 
@@ -243,6 +273,7 @@ const AppointmentPage = () => {
             <AppointmentForm
               selectedDay={selectedDay}
               onClose={() => setIsFormOpen(false)}
+              availabilitySpecs={availabilitySpecs}
             />
           </div>
         </div>
@@ -251,20 +282,24 @@ const AppointmentPage = () => {
   );
 };
 
-const TimeSlots = ({ selectedDay, onTimeSlotSelect }) => {
+const TimeSlots = ({ selectedDay, onTimeSlotSelect, availabilitySpecs }) => {
   const generateTimeSlots = () => {
     const slots = [];
+    const startHour = availabilitySpecs?.start_hour || "09:00:00";
+    const endHour = availabilitySpecs?.end_hour || "17:00:00";
+    const workBlock = availabilitySpecs?.work_block || "00:30:00";
+
     const startDate = new Date(
-      `${selectedDay.toISOString().split("T")[0]}T${backendConfig.start_hour}`
+      `${selectedDay.toISOString().split("T")[0]}T${startHour}`
     );
     const endDate = new Date(
-      `${selectedDay.toISOString().split("T")[0]}T${backendConfig.end_hour}`
+      `${selectedDay.toISOString().split("T")[0]}T${endHour}`
     );
-    const workBlockDuration = parseTimeString(backendConfig.work_block);
+    const workBlockDuration = parseTimeString(workBlock);
 
     let currentTime = startDate;
     while (currentTime <= endDate) {
-      slots.push(currentTime);
+      slots.push(new Date(currentTime));
       currentTime = new Date(currentTime.getTime() + workBlockDuration);
     }
 
@@ -272,6 +307,7 @@ const TimeSlots = ({ selectedDay, onTimeSlotSelect }) => {
   };
 
   const parseTimeString = (timeString) => {
+    if (!timeString || typeof timeString !== "string") return 0;
     const [hours, minutes, seconds] = timeString.split(":").map(Number);
     return (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
   };
@@ -295,34 +331,138 @@ const TimeSlots = ({ selectedDay, onTimeSlotSelect }) => {
   );
 };
 
-const AppointmentForm = ({ selectedDay, onClose }) => {
+// Form validation schema using Yup
+const validationSchema = Yup.object({
+  fullName: Yup.string().required("Full Name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  service: Yup.string().required("Service is required"),
+  location: Yup.string().required("Location is required"),
+  notes: Yup.string(),
+});
+
+const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
   const [selectedTime, setSelectedTime] = useState(null);
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      service: "",
+      location: "",
+      notes: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      const appointmentData = {
+        ...values,
+        date: selectedDay.toISOString().split("T")[0],
+        time_slot: selectedTime.toLocaleTimeString("en-US", { hour12: false }),
+      };
+      // Submit appointmentData to the backend
+      console.log(appointmentData);
+      onClose();
+    },
+  });
 
   const handleTimeSlotSelect = (slot) => {
     setSelectedTime(slot);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic
-    onClose();
   };
 
   return (
     <div className="appointment-form">
       <h2>Book an Appointment</h2>
       <p>{selectedDay.toDateString()}</p>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
+        <div>
+          <label htmlFor="fullName">Full Name</label>
+          <input
+            id="fullName"
+            name="fullName"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.fullName}
+          />
+          {formik.touched.fullName && formik.errors.fullName ? (
+            <div className="error">{formik.errors.fullName}</div>
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="error">{formik.errors.email}</div>
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="service">Service</label>
+          <input
+            id="service"
+            name="service"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.service}
+          />
+          {formik.touched.service && formik.errors.service ? (
+            <div className="error">{formik.errors.service}</div>
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="location">Location</label>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.location}
+          />
+          {formik.touched.location && formik.errors.location ? (
+            <div className="error">{formik.errors.location}</div>
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="notes">Notes</label>
+          <textarea
+            id="notes"
+            name="notes"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.notes}
+          />
+          {formik.touched.notes && formik.errors.notes ? (
+            <div className="error">{formik.errors.notes}</div>
+          ) : null}
+        </div>
         <TimeSlots
           selectedDay={selectedDay}
           onTimeSlotSelect={handleTimeSlotSelect}
+          availabilitySpecs={availabilitySpecs}
         />
         {selectedTime && (
           <div>
-            <p>Selected Time: {selectedTime.toLocaleTimeString()}</p>
-            <button type="submit">Confirm Appointment</button>
+            <p>
+              Selected Time:{" "}
+              {selectedTime.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
           </div>
         )}
+        <button type="submit" disabled={!selectedTime}>
+          Confirm Appointment
+        </button>
       </form>
       <button onClick={onClose}>Close</button>
     </div>
