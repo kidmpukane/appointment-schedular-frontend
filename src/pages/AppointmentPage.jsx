@@ -480,10 +480,10 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
           ) : null}
         </div>
         <div>
-          <label htmlFor="timeSlot">Select Time Slot</label>
           <select
             id="time_slot"
             name="time_slot"
+            className="appointment-time-slot"
             value={selectedTime}
             onChange={(e) => setSelectedTime(e.target.value)}
           >

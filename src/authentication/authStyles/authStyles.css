@@ -333,6 +333,16 @@ a:hover {
   color: var(--dark-gray);
 }
 
+.appointment-time-slot {
+  padding: 1em;
+  min-width: 94%;
+  border: 1px solid var(--dark-gray);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--medium-gray);
+  color: var(--dark-gray);
+}
+
 .appointment-form-container {
   max-height: 80vh; /* Ensures the container is scrollable if content exceeds this height */
   overflow-y: auto; /* Enables vertical scrolling */
