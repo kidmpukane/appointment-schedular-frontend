@@ -322,9 +322,12 @@ const AppointmentForm = ({
         ...values,
         service_provider: availabilitySpecs?.provider?.id,
         date: selectedDay.toISOString().split("T")[0],
-        time_slot: selectedTime,
+        time_slot: selectedTime + ":00",
       };
-
+      console.log(
+        "Appointment Data:",
+        JSON.stringify(appointmentData, null, 2)
+      );
       axios
         .post(
           "http://127.0.0.1:8000/appointments/book-appointment/",
@@ -338,7 +341,6 @@ const AppointmentForm = ({
         });
 
       onClose();
-      console.log(`Appointment Data: ${appointmentData}`);
     },
   });
 
@@ -357,13 +359,8 @@ const AppointmentForm = ({
     const workBlockDuration = parseTimeString(workBlock);
 
     let currentTime = startDate;
-    while (currentTime <= endDate) {
-      slots.push(
-        new Date(currentTime).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      );
+    while (currentTime < endDate) {
+      slots.push(currentTime.toTimeString().split(" ")[0].substring(0, 5)); // "HH:MM" format
       currentTime = new Date(currentTime.getTime() + workBlockDuration);
     }
 
