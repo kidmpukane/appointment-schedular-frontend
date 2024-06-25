@@ -83,7 +83,7 @@ const AppointmentPage = () => {
   const { username } = useParams();
 
   useEffect(() => {
-    console.log("Username:", username);
+    // console.log("Username:", username);
   }, [username]);
 
   const organisationInfoUrl = `http://127.0.0.1:8000/availability/availability/${username}/`;
@@ -300,7 +300,12 @@ const validationSchema = Yup.object({
   notes: Yup.string(),
 });
 
-const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
+const AppointmentForm = ({
+  selectedDay,
+  onClose,
+  availabilitySpecs,
+  providerId,
+}) => {
   const [selectedTime, setSelectedTime] = useState("");
 
   const formik = useFormik({
@@ -315,14 +320,25 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
     onSubmit: (values) => {
       const appointmentData = {
         ...values,
-
         service_provider: availabilitySpecs?.provider?.id,
         date: selectedDay.toISOString().split("T")[0],
         time_slot: selectedTime,
       };
-      // Submit appointmentData to the backend
-      console.log(appointmentData);
+
+      axios
+        .post(
+          "http://127.0.0.1:8000/appointments/book-appointment/",
+          appointmentData
+        )
+        .then((response) => {
+          console.log("Appointment booked successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error booking appointment:", error);
+        });
+
       onClose();
+      console.log(`Appointment Data: ${appointmentData}`);
     },
   });
 
@@ -375,10 +391,10 @@ const AppointmentForm = ({ selectedDay, onClose, availabilitySpecs }) => {
             placeholder="Enter Full Name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.fullName}
+            value={formik.values.full_name}
           />
-          {formik.touched.fullName && formik.errors.fullName ? (
-            <div className="error">{formik.errors.fullName}</div>
+          {formik.touched.full_name && formik.errors.full_name ? (
+            <div className="error">{formik.errors.full_name}</div>
           ) : null}
         </div>
         <div>
