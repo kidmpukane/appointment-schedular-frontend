@@ -18,7 +18,7 @@ function AuthRoutes() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/success" element={<Success />} />
       <Route path="/failure" element={<Failure />} />
-      {/* <Route path="*" element={<Navigate to="/log-in" />} /> */}
+      <Route path="*" element={<Navigate to="/log-in" />} />
     </Routes>
   );
 }
